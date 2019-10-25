@@ -4,40 +4,26 @@
  * and open the template in the editor.
  */
 
-package baitap5;
+package baitap3;
 
 /**
  *
  * @author Admin
  */
-
-    public class SinhVien {
-
-    private String hoTen;
-    private DiemHP hp1;
-    private DiemHP hp2;
-
-    public SinhVien(String hoTen, DiemHP hp1, DiemHP hp2) {
-        this.hoTen = hoTen;
-        this.hp1 = hp1;
-        this.hp2 = hp2;
+public class SinhVien {
+     private String hoTen;
+    private double dm1,dm2;
+    public SinhVien(String ten,Diem x,Diem y){
+       hoTen=ten;
+       dm1=x.tinhDiem();
+       dm2=y.tinhDiem();
     }
-    
-    public String layHoTen(){
-        return hoTen;
+    public double tinhDTB(){
+        return (dm1+dm2)/2;
     }
-    
-    public DiemHP layHp1() {
-        return hp1;
+    public String toString(){
+        return "Họ tên Sinh Viên: "+hoTen+"\nĐiểm trung bình: "+tinhDTB();
     }
 
-    public DiemHP layHp2() {
-        return hp2;
-    }
 
-    public double tinhDTB() {
-        return (layHp1().tinhDiem() * layHp1().laySoTinChi() + layHp2().tinhDiem() * layHp2().laySoTinChi()) / (layHp1().laySoTinChi() + layHp2().laySoTinChi());
-    }
 }
-
-
