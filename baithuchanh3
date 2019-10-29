@@ -1,0 +1,68 @@
+package bai3;
+
+class Diem {
+    private String tenHocPhan;
+    private int soTinChi;
+    private int chuyenCan,GiuaKy,CuoiKy;
+    public int laySTC(){
+    return soTinChi;
+    }
+    public Diem(String thp,int stc,int cc,int gk,int ck){
+        tenHocPhan=thp;
+        soTinChi=stc;
+        chuyenCan=cc;
+        GiuaKy=gk;
+        CuoiKy=ck;
+    }
+    public double tinhDiem(){
+        return 0.1*chuyenCan+0.2*GiuaKy+0.7*CuoiKy;
+    }
+}
+
+
+
+
+
+
+package bai3;
+public class Main {
+public static void main(String[] args) {
+    SinhVien[] sv = new SinhVien[3];
+    Diem[] monhoc = new Diem[6];
+    monhoc[0]= new Diem("Tư tưởng",3,8,7,6);
+    monhoc[1]= new Diem("gdtc",3,7,5,8);
+    monhoc[2]= new Diem("Mác",3,4,1,5);
+    monhoc[3]= new Diem("Toán logic",3,9,9,7);
+    monhoc[4]= new Diem("Đại số tuyến tính",3,8,7,6);
+    monhoc[5]= new Diem("Lập trình java",3,7,8,5);
+    sv[0]= new SinhVien("châu khâu",monhoc[0],monhoc[1]);
+    sv[1]= new SinhVien("hạnh trang ",monhoc[2],monhoc[3]);
+    sv[2]= new SinhVien("Kim Luyện",monhoc[4],monhoc[5]);
+    
+    for(int i=0;i<3;i++)
+        System.out.println(sv[i]);
+    }
+
+    
+}
+
+
+
+
+
+package bai3;
+class SinhVien {
+    private String hoTen;
+    private double dm1,dm2;
+    public SinhVien(String ten,Diem x,Diem y){
+       hoTen=ten;
+       dm1=x.tinhDiem();
+       dm2=y.tinhDiem();
+    }
+    public double tinhDTB(){
+        return (dm1+dm2)/2;
+    }
+    public String toString(){
+        return "Họ tên Sinh Viên: "+hoTen+"\nĐiểm trung bình: "+tinhDTB();
+    }
+}
