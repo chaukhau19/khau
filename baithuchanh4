@@ -1,0 +1,284 @@
+package baithhuchanh4;
+
+/**
+ *
+ * @author Admin
+ */
+
+    import java.util.Date;
+import java.util.StringTokenizer;
+
+ class SV {
+
+    private String hoTen;
+    private Date ngaySinh;
+    private double dtb;
+
+    public SV(String ht, Date ns, double dtb) {
+        hoTen = ht;
+        ngaySinh = ns;
+        this.dtb = dtb;
+    }
+
+    public String layHoTen() {
+        return hoTen;
+    }
+
+    public void ganHoTen(String hoTen) {
+        this.hoTen = hoTen;
+    }
+
+    public Date layNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void ganNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
+
+    public double layDTB() {
+        return dtb;
+    }
+
+    public void ganDTB(double d) {
+        this.dtb = d;
+    }
+
+    public void hienthi() {
+        System.out.println("\n Em tên là:" + hoTen
+                + "\n Ngày sinh:" + ngaySinh.getDate()
+                + "/" + ngaySinh.getMonth() + "/" + ngaySinh.getYear()
+                + "\n Điểm trung bình đạt được:" + dtb
+                + "\n Họ của tôi là:" + this.layHo()
+                + "\n Tên của tôi là:" + this.layTen()
+                + "\n Đệm của tôi là:" + this.layDem()
+                + "\n Tuổi của tôi là:" + this.layTuoi()
+                + "\n Xếp loại:" + this.layXepLoai());
+    }
+
+    public String layXepLoai() {
+        if (dtb < 5) {
+            return "Yếu";
+        } else {
+            if (dtb < 7) {
+                return "Trung bình";
+            } else {
+                if (dtb < 8) {
+                    return "Khá";
+                } else {
+                    return "Giỏi";
+                }
+
+            }
+        }
+    }
+
+    public String layHo() {
+        String a = this.layHoTen();
+        return a.split(" ")[0];
+    }
+
+    public String layTen() {
+        StringTokenizer a = new StringTokenizer(this.layHoTen());
+        return this.layHoTen().split(" ")[a.countTokens() - 1];
+    }
+
+    public String layDem() {
+        StringTokenizer a = new StringTokenizer(this.layHoTen());
+        int dem = a.countTokens() - 1;
+        String s = " ";
+        for (int i = 1; i < dem; i++) {
+            s = s.concat(this.layHoTen().split(" ")[i]);
+            if (i != dem - 1) {
+                s = s.concat(" ");
+            }
+        }
+        return s;
+    }
+
+    public int layTuoi() {
+        Date ngayht = new Date();
+        return (ngayht.getYear() + 1900) - this.ngaySinh.getYear();
+    }
+
+
+
+}
+
+
+
+
+
+
+package baithhuchanh4;
+
+/**
+ *
+ * @author Admin
+ */
+public class DSSV {
+    private SV SV[];
+    private int soSV;
+
+    public DSSV(int x) {
+        soSV = x;
+        SV = new SV[x];
+    }
+
+    public void them(SV sv) {
+        int vt = 0;
+        while (SV[vt] != null) {
+            vt = vt + 1;
+        }
+        SV[vt] = sv;
+    }
+
+    public SV laySV(int i) {
+        return SV[i];
+    }
+
+    public void hienThi() {
+        for (int i = 0; i < soSV; i++) {
+            SV[i].hienthi();
+        }
+    }
+
+    public void sapHoTen() {
+        SV tg;
+        String s1, s2;
+        for (int i = 0; i < soSV - 1; i++) {
+            for (int j = i + 1; j < soSV; j++) {
+                s1 = SV[i].layTen() + " " + SV[i].layHo() + " " + SV[i].layDem();
+                s2 = SV[j].layTen() + " " + SV[j].layHo() + " " + SV[j].layDem();
+                if (s1.compareTo(s2) > 0) {
+                    tg = SV[i];
+                    SV[i] = SV[j];
+                    SV[j] = tg;
+                }
+
+            }
+        }
+    }
+
+    public void sapTuoi() {
+        SV tg;
+        for (int i = 0; i < soSV - 1; i++) {
+            for (int j = i + 1; j < soSV; j++) {
+                if (SV[i].layTuoi() < SV[j].layTuoi()) {
+                    tg = SV[i];
+                    SV[i] = SV[j];
+                    SV[j] = tg;
+                }
+            }
+        }
+    }
+
+    public void sapDTB() {
+        SV tg;
+        for (int i = 0; i < soSV - 1; i++) {
+            for (int j = i + 1; j < soSV; j++) {
+                if (SV[i].layDTB() < SV[j].layDTB()) {
+                    tg = SV[i];
+                    SV[i] = SV[j];
+                    SV[j] = tg;
+                }
+            }
+        }
+    }
+
+    public int timTen(String st) {
+        int ok = -1;
+        for (int i = 0; i < soSV; i++) {
+            if (SV[i].layTen().compareTo(st) == 0) {
+                ok = i + 1;
+            }
+        }
+        return ok;
+    }
+
+    public void lietKeXepLoai(String st) {
+        System.out.println("Danh sách các sinh viên " + st + ":");
+        for (int i = 0; i < soSV; i++) {
+            if (SV[i].layXepLoai().equals(st)) {
+                SV[i].hienthi();
+            }
+        }
+    }
+
+    public void xoa(String st) {
+        int vt = this.timTen(st) - 1;
+        for (int i = vt; i < soSV - 1; i++) {
+            SV[i] = SV[i + 1];
+        }
+        soSV = soSV - 1;
+    }
+}
+
+
+
+
+
+
+
+
+package baithhuchanh4;
+
+/**
+ *
+ * @author Admin
+ */
+
+    import java.util.Date;
+public class Main {
+
+    
+    public static void main(String[] args) {
+        DSSV danhsach = new DSSV(5);
+        SV sv[] = new SV[5];
+        //Tạo danh sách gồm 5 sinh viên
+        sv[0] = new SV("Nguyễn Thanh Phong", new Date(2000, 4, 5), 9);
+        sv[1] = new SV("Nguyễn Hồng Phong", new Date(1999, 4, 5), 9);
+        sv[2] = new SV("Nguyễn Thị Thơm",  new Date(1999, 11, 30), 8);
+        sv[1] = new SV("Phan Thị Tuyết Nga", new Date(2000, 27, 12), 9);
+        sv[4] = new SV("Đỗ Ngọc Nam", new Date(2000, 9, 10), 6.2);
+        
+        for (int i = 0; i < 5; i++) {
+            danhsach.them(sv[i]);
+        }
+        
+        //Sắp xếp danh sách theo họ tên
+        danhsach.sapHoTen();
+        
+        //Liệt kê những sinh viên giỏi
+        danhsach.lietKeXepLoai("Giỏi");
+        
+        //Tìm sinh viên tên Nam
+        if (danhsach.timTen("Nam") > 0) {
+            System.out.println("Tìm thấy SV tên Nam ở vị trí " + danhsach.timTen("Nam"));
+        } else {
+            System.out.println("Không tìm thấy");
+        }
+        
+        //Xóa sinh viên đầu tiên tên Hòa
+        danhsach.xoa("Hòa");
+
+        //Tính tuổi trung bình
+        int tuoiTB = 0;
+        for (int i = 0; i < 5; i++) {
+            tuoiTB += sv[i].layTuoi();
+        }
+        System.out.println("Tuổi trung bình là: " + tuoiTB / 5);
+        
+        //Tăng DTB lên 0.5 cho những SV sinh trước năm 1980
+        for (int i = 0; i < 5; i++) {
+            if ((sv[i].layNgaySinh().getYear() + 1900) < 1980) {
+                sv[i].ganDTB(sv[i].layDTB() + 0.5);
+            }
+        }
+        
+    	
+
+    }
+    }
+
+
