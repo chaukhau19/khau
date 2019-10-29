@@ -1,0 +1,183 @@
+package hocphan;
+
+/**
+ *
+ * @author Admin
+ */
+public class DiemHP {
+
+    protected String tenHP;
+    protected int soTinChi;
+
+    public DiemHP(String tenHP, int soTinChi) {
+        this.tenHP = tenHP;
+        this.soTinChi = soTinChi;
+    }
+
+    public String layTenHP() {
+        return tenHP;
+    }
+    
+    public int laySoTinChi() {
+        return soTinChi;
+    }
+
+    public double tinhDiem() {
+        return 0;
+    }
+}
+
+
+
+
+
+
+package hocphan;
+
+/**
+ *
+ * @author Admin
+ */
+public class HPLyThuyet extends DiemHP {
+
+    private double chuyenCan;
+    private double giuaKy;
+    private double cuoiKy;
+
+    public HPLyThuyet(String tHP, int sTC, double chuyenCan, double giuaKy, double cuoiKy) {
+        super(tHP, sTC);
+        this.chuyenCan = chuyenCan;
+        this.giuaKy = giuaKy;
+        this.cuoiKy = cuoiKy;
+    }
+    
+    public String layTenHP() {
+        return tenHP;
+    }
+    
+    public int laySoTinChi() {
+        return soTinChi;
+    }
+    
+    public double tinhDiem() {
+        return chuyenCan * 0.1 + giuaKy * 0.2 + cuoiKy * 0.7;
+    }
+}
+
+
+
+
+
+package hocphan;
+
+/**
+ *
+ * @author Admin
+ */
+public class HPThucHanh extends DiemHP {
+
+    private double db1;
+    private double db2;
+    private double db3;
+
+    public HPThucHanh(String tHP, int sTC, double db1, double db2, double db3) {
+        super(tHP, sTC);
+        this.db1 = db1;
+        this.db2 = db2;
+        this.db3 = db3;
+    }
+    
+    public String layTenHP() {
+        return tenHP;
+    }
+    
+    public int laySoTinChi() {
+        return soTinChi;
+    }
+    
+    public double tinhDiem() {
+        return (db1 + db2 + db3) / 3;
+    }
+}
+
+
+
+
+
+
+package hocphan;
+
+/**
+ *
+ * @author Admin
+ */
+public class SinhVien {
+
+    private String hoTen;
+    private DiemHP hp1;
+    private DiemHP hp2;
+
+    public SinhVien(String hoTen, DiemHP hp1, DiemHP hp2) {
+        this.hoTen = hoTen;
+        this.hp1 = hp1;
+        this.hp2 = hp2;
+    }
+    
+    public String layHoTen(){
+        return hoTen;
+    }
+    
+    public DiemHP layHp1() {
+        return hp1;
+    }
+
+    public DiemHP layHp2() {
+        return hp2;
+    }
+
+    public double tinhDTB() {
+        return (layHp1().tinhDiem() * layHp1().laySoTinChi() + layHp2().tinhDiem() * layHp2().laySoTinChi()) / (layHp1().laySoTinChi() + layHp2().laySoTinChi());
+    }
+}
+
+
+
+
+
+
+
+package hocphan;
+
+/**
+ *
+ * @author Admin
+ */
+public class HocPhan {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        SinhVien[] ds = new SinhVien[3];
+        DiemHP m1, m2;
+        m1 = new HPLyThuyet("CTDL", 4, 10, 10, 10);
+        m2 = new HPThucHanh("LTHDT", 3, 10, 10, 10);
+        ds[0] = new SinhVien("Nguyen Van A", m1, m2);
+        m1 = new HPLyThuyet("THDC", 4, 7, 8, 10);
+        m2 = new HPThucHanh("GDTC", 3, 8, 9, 8);
+        ds[1] = new SinhVien("Nguyen Van B", m1, m2);
+        m1 = new HPLyThuyet("TinHoc", 4, 9, 5, 8);
+        m2 = new HPThucHanh("Pascal", 3, 9, 8, 9);
+        ds[2] = new SinhVien("Nguyen Van C", m1, m2);
+        for (int i = 0; i < 3; i++) {
+            System.out.println(
+                    ds[i].layHoTen()
+                    + "\nDiem " + ds[i].layHp1().layTenHP() + " " + ds[i].layHp1().tinhDiem()
+                    + "\nDiem " + ds[i].layHp2().layTenHP() + " " + ds[i].layHp2().tinhDiem()
+                    + "\nDiem TB: " + ds[i].tinhDTB()
+                    + "\n");
+        }
+    }
+
+}
