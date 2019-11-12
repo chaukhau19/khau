@@ -100,16 +100,8 @@ import java.util.StringTokenizer;
         Date ngayht = new Date();
         return (ngayht.getYear() + 1900) - this.ngaySinh.getYear();
     }
-
-
-
 }
-
-
-
-
-
-
+---------------------------------------------------------------------------------------------------------------------------
 package baithhuchanh4;
 
 /**
@@ -213,14 +205,7 @@ public class DSSV {
         soSV = soSV - 1;
     }
 }
-
-
-
-
-
-
-
-
+---------------------------------------------------------------------------------------------------------------------------
 package baithhuchanh4;
 
 /**
@@ -236,11 +221,11 @@ public class Main {
         DSSV danhsach = new DSSV(5);
         SV sv[] = new SV[5];
         //Tạo danh sách gồm 5 sinh viên
-        sv[0] = new SV("Nguyễn Thanh Phong", new Date(2000, 4, 5), 9);
+        sv[0] = new SV("Nguyễn Thị châu khâu", new Date(2000, 4, 5), 9);
         sv[1] = new SV("Nguyễn Hồng Phong", new Date(1999, 4, 5), 9);
         sv[2] = new SV("Nguyễn Thị Thơm",  new Date(1999, 11, 30), 8);
         sv[1] = new SV("Phan Thị Tuyết Nga", new Date(2000, 27, 12), 9);
-        sv[4] = new SV("Đỗ Ngọc Nam", new Date(2000, 9, 10), 6.2);
+        sv[4] = new SV("ngô thị mỹ phượng", new Date(2000, 9, 10), 6.2);
         
         for (int i = 0; i < 5; i++) {
             danhsach.them(sv[i]);
@@ -275,10 +260,5 @@ public class Main {
                 sv[i].ganDTB(sv[i].layDTB() + 0.5);
             }
         }
-        
-    	
-
     }
     }
-
-
