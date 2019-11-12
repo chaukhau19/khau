@@ -18,11 +18,7 @@ class Diem {
         return 0.1*chuyenCan+0.2*GiuaKy+0.7*CuoiKy;
     }
 }
-
-
-
-
-
+          ---------------------------------------------------------------------------------------------------
 
 package bai3;
 public class Main {
@@ -42,13 +38,9 @@ public static void main(String[] args) {
     for(int i=0;i<3;i++)
         System.out.println(sv[i]);
     }
-
-    
 }
 
-
-
-
+     ------------------------------------------------------------------------------------------------------------
 
 package bai3;
 class SinhVien {
