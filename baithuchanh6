@@ -1,0 +1,165 @@
+import java.util.*;
+public class DSSV {
+    private Vector ds;
+    public DSSV(){
+        ds=new Vector();
+    }
+    public void them(SV a){
+        if(ds.contains(a)==false)
+        ds.addElement(a);
+    }
+    public void lietKe(){
+        for(int i=0;i<ds.size();i++)
+            ((SV)ds.elementAt(i)).hienThi();
+    }
+    public void lietKe(String s){
+        for(int i=0;i<ds.size();i++)
+            if(((SV)ds.elementAt(i)).loaiSV().equals(s)){
+                ((SV)ds.elementAt(i)).hienThi();
+            }
+        
+    }
+    public void dsTN(){
+        System.out.println("Danh sách SV được tốt nghiệp: ");
+        for(int i=0;i<ds.size();i++)
+            if(((SV)ds.elementAt(i)).duocTN()){
+                ((SV)ds.elementAt(i)).hienThi();
+            }
+    }
+    public SV tim(String ht){
+        for(int i=0;i<ds.size();i++)
+            if(((SV)ds.elementAt(i)).layHoTen().equals(ht)){
+               return (SV)ds.elementAt(i);
+            }
+        return null;
+    }
+    public void xoa(String ht){
+        for(int i=0;i<ds.size();i++)
+            if(((SV)ds.elementAt(i)).layHoTen().equals(ht)){
+                ds.removeElementAt(i);
+                return;
+            }
+    }
+}
+-----------------------------------------------------------------------------------------------------------------------------
+public class Main {
+
+    public static void main(String[] args) {
+        DSSV ds=new DSSV();
+        SVSP sv1=new SVSP("khâu",2000,7,"QN",7);
+        SVSP sv2=new SVSP("phương",2002,8,"PM",5);
+        ds.them(sv1);
+        ds.them(sv2);
+        ds.lietKe("SP");
+        ds.dsTN();
+    }
+    
+}
+-------------------------------------------------------------------------------------------------------------------------------
+public class SV {
+    protected String hoTen;
+    protected int namSinh;
+    protected double dtb;
+    public SV(String a,int b,double c){
+        hoTen=a;
+        namSinh=b;
+        dtb=c;
+    }
+    public String layHoTen(){
+        return hoTen;
+    }
+    public String loaiSV(){
+        return "";
+    }
+    public void hienThi(){
+        System.out.println(hoTen+", sinh năm: "+namSinh+",ĐTB: "+dtb);
+    }
+    public boolean duocTN(){
+        return true;
+    };
+    public boolean equals(Object s){
+        if(s instanceof SV)
+        {
+            SV ss=(SV) s;
+            return hoTen.equals(ss.hoTen)&& namSinh==ss.namSinh && dtb==ss.dtb;
+        }
+        else return false;
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------
+public class SVSP extends SV{
+    protected String noiTT;
+    protected double diemTT;
+    public SVSP(String a,int b,double c,String d,double e){
+        super(a,b,c);
+        noiTT=d;
+        diemTT=e;
+    }
+    public String loaiSV(){
+        return "SP";
+    }
+    public void hienThi(){
+        System.out.println(hoTen+", sinh năm: "+namSinh+",ĐTB: "+dtb);
+        System.out.println("Nơi thực tập: "+noiTT+", Điểm TT: "+diemTT);
+    }
+    public boolean duocTN(){
+        return dtb>=5 && diemTT>=7;
+    }
+    public boolean equals(Object s){
+        if(s instanceof SVSP)
+        {
+            SVSP ss=(SVSP) s;
+            return hoTen.equals(ss.hoTen)&& namSinh==ss.namSinh && dtb==ss.dtb 
+                    && noiTT.equals(ss.noiTT) && diemTT==ss.diemTT;
+        }
+        else return false;
+    }
+}
+---------------------------------------------------------------------------------------------------------------------
+public class SVTH extends SV{
+    protected String tenDT;
+    protected double diemDT;
+    public SVTH(String a,int b,double c,String d,double e){
+        super(a,b,c);
+        tenDT=d;
+        diemDT=e;
+    }
+    public String loaiSV(){
+        return "TH";
+    }
+    public void hienThi(){
+        System.out.println(hoTen+", sinh năm: "+namSinh+",ĐTB: "+dtb);
+        System.out.println("Tên DT: "+tenDT+", Điểm DT: "+diemDT);
+    }
+    public boolean duocTN(){
+        return dtb>=5 && diemDT>=7;
+    }
+    public boolean equals(Object s){
+        if(s instanceof SVTH)
+        {
+            SVTH ss=(SVTH) s;
+            return hoTen.equals(ss.hoTen)&& namSinh==ss.namSinh && dtb==ss.dtb 
+                    && tenDT.equals(ss.tenDT) && diemDT==ss.diemDT;
+        }
+        else return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
