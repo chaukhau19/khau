@@ -26,11 +26,7 @@ public class DiemHP {
         return 0;
     }
 }
-
-
-
-
-
+--------------------------------------------------------------------------------------------------------------------
 
 package hocphan;
 
@@ -63,11 +59,7 @@ public class HPLyThuyet extends DiemHP {
         return chuyenCan * 0.1 + giuaKy * 0.2 + cuoiKy * 0.7;
     }
 }
-
-
-
-
-
+------------------------------------------------------------------------------------------------------------------------
 package hocphan;
 
 /**
@@ -99,12 +91,7 @@ public class HPThucHanh extends DiemHP {
         return (db1 + db2 + db3) / 3;
     }
 }
-
-
-
-
-
-
+---------------------------------------------------------------------------------------------------------------
 package hocphan;
 
 /**
@@ -139,13 +126,7 @@ public class SinhVien {
         return (layHp1().tinhDiem() * layHp1().laySoTinChi() + layHp2().tinhDiem() * layHp2().laySoTinChi()) / (layHp1().laySoTinChi() + layHp2().laySoTinChi());
     }
 }
-
-
-
-
-
-
-
+---------------------------------------------------------------------------------------------------------------------------
 package hocphan;
 
 /**
