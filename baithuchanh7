@@ -1,0 +1,100 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.*;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Admin
+ */
+public class TepVanBan {
+
+    public static void taoTep() {
+        try {
+            String name;
+            Scanner scanner = new Scanner(System.in);
+            System.out.printf("Nhap ten tep can tao:");
+            name = scanner.nextLine();
+            FileOutputStream f = new FileOutputStream(name + ".txt");
+            PrintWriter pw = new PrintWriter(f);
+            for (int i = 1; i <= 100; i++) {
+                int k = (int) (Math.random() * 1000);
+                pw.print(k + " ");
+                if (i % 10 == 0) {
+                    pw.println();
+                }
+            }
+            pw.close();
+        } catch (IOException e) {
+        }
+    }
+
+    public static void docTep() {
+        try {
+            FileInputStream fin = new FileInputStream("songuyen.txt");
+            FileOutputStream fout = new FileOutputStream("gheptep.txt");
+            PrintWriter pw = new PrintWriter(fout);
+            Scanner sc = new Scanner(fin);
+            int d = 0;
+            for (int i = 1; i <= 100; i++) {
+                int k = sc.nextInt();
+                if (k % 2 == 0) {
+                    pw.print(k + " ");
+                    d++;
+                }
+                if (d % 10 == 0) {
+                    pw.println();
+                }
+            }
+            pw.close();
+            fin.close();
+        } catch (IOException e) {
+        }
+    }
+
+    public static void ghepTep() {
+        try {
+            String name;
+            Scanner scanner = new Scanner(System.in);
+            System.out.printf("Nhap ten tep thu 1:");
+            name = scanner.nextLine();
+            FileInputStream fin1 = new FileInputStream(name + ".txt");
+            System.out.printf("Nhap ten tep thu 2:");
+            name = scanner.nextLine();
+            FileInputStream fin2 = new FileInputStream(name + ".txt");
+            System.out.printf("Ten tep sau khi ghep:");
+            name = scanner.nextLine();
+            FileOutputStream fout = new FileOutputStream(name + ".txt");
+            PrintWriter pw = new PrintWriter(fout);
+            scanner = new Scanner(fin1);
+            for (int i = 1; i <= 100; i++) {
+                int k = scanner.nextInt();
+                pw.print(k + " ");
+                if (i % 10 == 0) {
+                    pw.println();
+                }
+            }
+            scanner = new Scanner(fin2);
+            for (int i = 1; i <= 100; i++) {
+                int k = scanner.nextInt();
+                pw.print(k + " ");
+                if (i % 10 == 0) {
+                    pw.println();
+                }
+            }
+            pw.close();
+            fin1.close();
+            fin2.close();
+        } catch (IOException e) {
+        }
+    }
+
+    public static void main(String args[]) {
+        
+        ghepTep();
+    }
+}
