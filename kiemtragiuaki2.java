@@ -1,31 +1,3 @@
-public class Main {
-    public static void main(String args[]){
-        Hinh dsHinh[]=new Hinh[4];
-        dsHinh[0]=new HinhTron(1,0,2,3,5);
-        dsHinh[1]=new HinhChuNhat(2,1,4,6);
-        dsHinh[2]=new HinhChuNhat(0,2,7,3);
-        dsHinh[3]=new HinhVuong(0,1,5);
-       
-        double tongChuVi=0;
-        double tongDienTich=0;
-        for(int i=0;i<4;i++){
-            dsHinh[i].veHinh();
-            tongChuVi+=dsHinh[i].tinhChuVi();
-            tongDienTich+=dsHinh[i].tinhDienTich();
-        }
-        System.out.println("Tổng chu vi là:"+tongChuVi);
-        System.out.println("Tổng diện tích là:"+tongDienTich);
-       
-        dsHinh[1].doiMauTo(Hinh.DEN);
-        dsHinh[1].doiMauVe(Hinh.DO);
-        ((HinhTron)dsHinh[0]).diChuyen(4,5);
-        ((HinhTron)dsHinh[0]).doiBanKinh(6);
-        dsHinh[1].veHinh();
-        dsHinh[0].veHinh();
-       
-    }
-}
----------------------------------------------------------------------------------------------
 abstract class Hinh {
     public static final int DEN=0;
     public static final int XANH=1;
@@ -56,8 +28,57 @@ abstract class Hinh {
     public abstract double tinhDienTich();
     public abstract double tinhChuVi();
 }
-------------------------------------------------------------------------------------
-class HinhTron extends Hinh{
+---------------------------------------------------------
+    class HinhChuNhat extends Hinh{
+    protected double dai;
+    protected double rong;
+    public HinhChuNhat(int mauVe,int mauTo,double d,double r){
+        super(mauVe,mauTo);
+        dai=d;
+        rong=r;
+    }
+    public double layDai(){
+        return dai;
+    }
+    public double layRong(){
+        return rong;
+    }
+    public void doiDai(double dai){
+        this.dai=dai;
+    }
+    public void doiRong(double rong){
+        this.rong=rong;
+    }
+    public void veHinh(){
+        String v = "";
+        String t = "";
+        if(mauVe==DEN)
+            v="Đen";
+        if(mauVe==XANH)
+            v="Xanh";
+        if(mauVe==DO)
+            v="Đỏ";
+        if(mauTo==DEN)
+            t="Đen";
+        if(mauTo==XANH)
+            t="Xanh";
+        if(mauTo==DO)
+            t="Đỏ";
+        System.out.println("Vẽ Hình chữ nhật màu "+v+", tô màu "+t
+                +",chiều dài="+dai+",chiều rộng="+rong);
+    }
+    public double tinhDienTich(){
+        return (dai*rong);
+    }
+    public double tinhChuVi(){
+        return (dai+rong)*2;
+    }
+    public String toString(){
+        return "Hình chữ nhật chiều dài="+dai+",chiều rộng="+rong;
+    }
+}
+----------------------------------------------------------------
+    class HinhTron extends Hinh{
     private double x;
     private double y;
     private double R;
@@ -90,7 +111,23 @@ class HinhTron extends Hinh{
         this.R=R;
     }
     public void veHinh(){
-      
+        String v = "";
+        String t = "";
+        if(mauVe==DEN)
+            v="Đen";
+        if(mauVe==XANH)
+            v="Xanh";
+        if(mauVe==DO)
+            v="Đỏ";
+        if(mauTo==DEN)
+            t="Đen";
+        if(mauTo==XANH)
+            t="Xanh";
+        if(mauTo==DO)
+            t="Đỏ";
+        System.out.println("Vẽ Hình tròn màu "+v+", tô màu "+t
+                +",tọa độ x="+x+",y="+y+",R="+R);
+       
     }
     public double tinhDienTich(){
         return (R*R*3.14);
@@ -101,43 +138,9 @@ class HinhTron extends Hinh{
     public String toString(){
         return "Hình tròn tọa độ x="+x+",y="+y+",R="+R;
     }
-}
--------------------------------------------------------------------------------
-class HinhChuNhat extends Hinh{
-    protected double dai;
-    protected double rong;
-    public HinhChuNhat(int mauVe,int mauTo,double d,double r){
-        super(mauVe,mauTo);
-        dai=d;
-        rong=r;
     }
-    public double layDai(){
-        return dai;
-    }
-    public double layRong(){
-        return rong;
-    }
-    public void doiDai(double dai){
-        this.dai=dai;
-    }
-    public void doiRong(double rong){
-        this.rong=rong;
-    }
-    public void veHinh(){
-        System.out.println("Vẽ hình chữ nhật");
-    }
-    public double tinhDienTich(){
-        return (dai*rong);
-    }
-    public double tinhChuVi(){
-        return (dai+rong)*2;
-    }
-    public String toString(){
-        return "Hình chữ nhật chiều dài="+dai+",chiều rộng="+rong;
-    }
-}
----------------------------------------------------------------------
-class HinhVuong extends HinhChuNhat{
+------------------------------------------------------------------
+    class HinhVuong extends HinhChuNhat{
     private double canh;
     public HinhVuong(int mauVe,int mauTo,double canh){
         super(mauVe,mauTo,canh,canh);
@@ -147,4 +150,31 @@ class HinhVuong extends HinhChuNhat{
         return "Hình vuông độ dài cạnh="+canh;
     }
 }
-
+-------------------------------------------------------------
+    public class Main {
+    public static void main(String args[]){
+        Hinh dsHinh[]=new Hinh[4];
+        dsHinh[0]=new HinhTron(1,0,2,3,5);
+        dsHinh[1]=new HinhChuNhat(2,1,4,6);
+        dsHinh[2]=new HinhChuNhat(0,2,7,3);
+        dsHinh[3]=new HinhVuong(0,1,5);
+        
+        double tongChuVi=0;
+        double tongDienTich=0;
+        for(int i=0;i<4;i++){
+            dsHinh[i].veHinh();
+            tongChuVi+=dsHinh[i].tinhChuVi();
+            tongDienTich+=dsHinh[i].tinhDienTich();
+        }
+        System.out.println("Tổng chu vi là:"+tongChuVi);
+        System.out.println("Tổng diện tích là:"+tongDienTich);
+        
+        dsHinh[1].doiMauTo(Hinh.XANH);
+        dsHinh[1].doiMauVe(Hinh.DO);
+        ((HinhTron)dsHinh[0]).diChuyen(4,5);
+        ((HinhTron)dsHinh[0]).doiBanKinh(6);
+        dsHinh[1].veHinh();
+        dsHinh[0].veHinh();
+        
+    }
+}
