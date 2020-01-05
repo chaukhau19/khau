@@ -1,0 +1,264 @@
+package HocPhi;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+public class DoHoa implements ActionListener
+{
+	private static final String String = null;
+	Frame tieuDe = new Frame("Dong tien hoc phi ho cai :)");
+	Label thongTin = new Label("Thong Tin Sinh Vien Dong Hoc Phi");
+	Label tenSinhVien = new Label("Ten Sinh Vien: ");
+	TextField oSinhVien = new TextField(20);
+	Label nganh = new Label("Nganh: ");
+	Label doiTuong = new Label("Doi Tuong: ");
+	Label STCHL = new Label("So Tin Chi Hoc Lai: ");
+	TextField oSTCHL = new TextField(20);
+	Label LoaiHP = new Label("Chon Loai Hoc Phi?");
+	TextField tinhKQ= new TextField(20);
+	CheckboxGroup tieuDe1 = new CheckboxGroup();
+	Checkbox hocPhiDH = new Checkbox("Hoc Phi Dai Hoc: ", tieuDe1, true);
+	Checkbox hocPhiCH = new Checkbox("Hoc Phi Cao Hoc: ", tieuDe1, false);
+	Label chonNganh = new Label("Chon Ma Nganh");
+	CheckboxGroup tieuDe2 = new CheckboxGroup();
+	Checkbox nganh101 = new Checkbox("101: ", tieuDe2, true);
+	Checkbox nganh102 = new Checkbox("102: ", tieuDe2, false);
+	Checkbox nganh103 = new Checkbox("103: ", tieuDe2, false);
+	Label chonDoiTuong = new Label("Chon Doi Tuong");
+	CheckboxGroup tieuDe3 = new CheckboxGroup();
+	Checkbox doiTuong01 = new Checkbox("01: ", tieuDe3, true);
+	Checkbox doiTuong02 = new Checkbox("02: ", tieuDe3, false);
+	Checkbox doiTuong03 = new Checkbox("03: ", tieuDe3, false);
+	Checkbox doiTuong04 = new Checkbox("04: ", tieuDe3, false);
+	Label HPHK = new Label("Hoc Phi Hoc Ki:");
+	TextField oHPHK= new TextField(20);
+	Label HPHL = new Label("Hoc Phi Hoc Lai:");
+	TextField oHPHL= new TextField(20);
+	Label InRa = new Label("Ket Qua la: ");
+	TextField oKetQua= new TextField(20);
+	Button KetQua = new Button("Tinh Ket Qua");
+	Button Thoat = new Button("Thoat");
+	Button xuatFile = new Button("Xuat file");
+	Button docFile = new Button("Doc File");
+	public DoHoa() throws IOException 
+	{
+		FileOutputStream file = new FileOutputStream("file.txt");
+		tieuDe.setLayout(null);
+		tieuDe.setSize(600,800);
+		tieuDe.add(thongTin);
+		tieuDe.add(LoaiHP); tieuDe.add(hocPhiDH);tieuDe.add(hocPhiCH);
+		tieuDe.add(tenSinhVien); tieuDe.add(oSinhVien);
+		tieuDe.add(nganh);tieuDe.add(nganh101);tieuDe.add(nganh102);tieuDe.add(nganh103);
+		tieuDe.add(doiTuong);tieuDe.add(doiTuong01);tieuDe.add(doiTuong02);tieuDe.add(doiTuong03);tieuDe.add(doiTuong04);
+		tieuDe.add(STCHL);tieuDe.add(oSTCHL);
+		tieuDe.add(HPHK);tieuDe.add(oHPHK);
+		tieuDe.add(HPHL);tieuDe.add(oHPHL);
+		tieuDe.add(InRa);tieuDe.add(oKetQua);
+		tieuDe.add(KetQua);tieuDe.add(Thoat);tieuDe.add(xuatFile);tieuDe.add(docFile);
+		KetQua.addActionListener(this);
+		Thoat.addActionListener(this);
+		xuatFile.addActionListener(this);
+		docFile.addActionListener(this);
+		tieuDe.setVisible(true);
+		
+		
+		thongTin.setBounds(20,50,200,20);
+		LoaiHP.setBounds(20,120,120,20);hocPhiDH.setBounds(160,120,120,20);hocPhiCH.setBounds(300,120,120,20);
+		tenSinhVien.setBounds(20,190,100,20);oSinhVien.setBounds(150,190,100,20);
+		nganh.setBounds(20,260,100,20);nganh101.setBounds(150,260,100,20);nganh102.setBounds(280,260,100,20);nganh103.setBounds(410,260,100,20);
+		doiTuong.setBounds(20,330,100,20);doiTuong01.setBounds(150,330,100,20);doiTuong02.setBounds(280,330,100,20);doiTuong03.setBounds(410,330,100,20);doiTuong04.setBounds(540,330,100,20);
+		STCHL.setBounds(20,400,120,20);oSTCHL.setBounds(160,400,100,20);
+		HPHK.setBounds(20,470,100,20);oHPHK.setBounds(160,470,100,20);
+		HPHL.setBounds(20,540,100,20);oHPHL.setBounds(160,540,100,20);
+		InRa.setBounds(20,610,100,20);oKetQua.setBounds(160,610,100,20);
+		KetQua.setBounds(20,680,100,20);Thoat.setBounds(150,680,100,20);xuatFile.setBounds(280,680,100,20);docFile.setBounds(410,680,100,20);
+		
+		
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==Thoat)
+			System.exit(0);
+		if(ae.getSource()==xuatFile)
+		{
+			try
+			{
+				FileWriter out = new FileWriter("file.txt", true);
+				String tenSV = String.valueOf(oSinhVien.getText());
+				String n;
+				if(nganh101.getState()==true) n="101";
+				else if(nganh102.getState()==true) n="102"; 
+				else n = "103";
+				String dt;
+				if(doiTuong01.getState()==true) dt = "01";
+				else if(doiTuong02.getState()==true) dt="02";
+				else if(doiTuong03.getState()==true) dt="03";
+				else dt="04";
+				int soTCHL = Integer.parseInt(oSTCHL.getText());
+				String tienHK = String.valueOf(oHPHK.getText());
+				String tienHL = String.valueOf(oHPHL.getText());
+				String tienTong = String.valueOf(oKetQua.getText());
+				out.write(tenSV+"-"
+						+n+"-"
+						+dt+"-"
+						+soTCHL+"-"
+						+tienHK+"-"
+						+tienHL+"-"
+						+tienTong+"\n");
+				out.close();
+			}
+			catch (IOException ex)
+			{
+		
+			}
+		}
+		if(ae.getSource()==docFile)
+		{
+			
+		}
+		if(ae.getSource()==KetQua)
+		{
+			int sotc;
+			String ten = String.valueOf(tenSinhVien.getText());
+			sotc = Integer.parseInt(oSTCHL.getText());
+			HocPhi hp;
+			boolean checked1 = hocPhiDH.getState();
+			if(checked1)
+			{
+				if(nganh101.getState())
+				{
+					if(doiTuong01.getState())
+					{
+						hp=new HocPhiDH(ten, "101", "01", sotc);
+					}
+					else if(doiTuong02.getState())
+						{
+							hp=new HocPhiDH(ten, "101", "02", sotc);
+						}
+						else if(doiTuong03.getState())
+							{
+								hp=new HocPhiDH(ten, "101", "03", sotc);
+							}
+							else
+							{
+						hp=new HocPhiDH(ten, "101", "04", sotc);
+					}
+				}
+				else if(nganh102.getState())
+				{
+					if(doiTuong01.getState())
+					{
+						hp=new HocPhiDH(ten, "102", "01", sotc);
+						
+					}
+					else if(doiTuong02.getState())
+						{
+						hp=new HocPhiDH(ten, "102", "02", sotc);
+					}
+					else if(doiTuong03.getState())
+					{
+						hp=new HocPhiDH(ten, "102", "03", sotc);
+					}
+					else
+					{
+						hp=new HocPhiDH(ten, "102", "04", sotc);
+					}
+				}	
+				else
+				{
+					if(doiTuong01.getState())
+					{
+						hp=new HocPhiDH(ten, "103", "01", sotc);
+					}
+					else if(doiTuong02.getState())
+					{
+						hp=new HocPhiDH(ten, "103", "02", sotc);
+					}
+					else if(doiTuong03.getState())
+					{
+						hp=new HocPhiDH(ten, "103", "03", sotc);
+					}
+					else
+					{
+						hp=new HocPhiDH(ten, "103", "04", sotc);
+					}
+				}	
+			}
+			else
+			{
+				if(nganh101.getState())
+				{
+					if(doiTuong01.getState())
+					{
+						hp=new HocPhiDH(ten, "101", "01", sotc);
+					}
+					else if(doiTuong02.getState())
+					{
+						hp=new HocPhiDH(ten, "101", "02", sotc);
+					}
+					else if(doiTuong03.getState())
+					{
+						hp=new HocPhiDH(ten, "101", "03", sotc);
+					}
+					else
+					{
+						hp=new HocPhiDH(ten, "101", "04", sotc);
+					}
+				}
+				else if(nganh102.getState())
+				{
+					if(doiTuong01.getState())
+					{
+						hp=new HocPhiDH(ten, "102", "01", sotc);
+					}
+					else if(doiTuong02.getState())
+					{
+						hp=new HocPhiDH(ten, "102", "02", sotc);
+					}
+					else if(doiTuong03.getState())
+					{
+						hp=new HocPhiDH(ten, "102", "03", sotc);
+					}
+					else
+					{
+						hp=new HocPhiDH(ten, "102", "04", sotc);
+					}
+				}	
+				else
+				{
+					if(doiTuong01.getState())
+					{
+						hp=new HocPhiDH(ten, "103", "01", sotc);
+					}
+					else if(doiTuong02.getState())
+					{
+						hp=new HocPhiDH(ten, "103", "02", sotc);
+					}
+					else if(doiTuong03.getState())
+					{
+						hp=new HocPhiDH(ten, "103", "03", sotc);
+					}
+					else
+					{
+						hp=new HocPhiDH(ten, "103", "04", sotc);
+					}
+				}	
+			}
+			oHPHK.setText(""+hp.hocPhiHK());
+			oHPHL.setText(""+hp.hocPhiHL());
+			oKetQua.setText(""+hp.hocPhiTong());
+	
+		}
+	}
+}
+class TestThoi
+{
+	public static void main(String args[]) throws IOException
+	{
+		new DoHoa();
+		File f = new File("file.txt");
+	}
+}
