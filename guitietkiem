@@ -1,3 +1,4 @@
+
 package TietKiem;
 
 import java.io.*;
@@ -33,7 +34,8 @@ abstract class TietKiem implements Serializable {
 		System.out.println(" " + hoTen + " " + soTien + "     " + soThang);
 	}
 }
---------------------------------------------------------------------------------------
+------------------------------------------------------
+package TietKiem;
 class TKABC extends TietKiem {
 	public TKABC(String hoTen, double soTien, int soThang) {
 		super(hoTen, soTien, soThang);
@@ -50,13 +52,16 @@ class TKABC extends TietKiem {
 			return laySoTien() * 0.1;
 	}
 
-	public void hienThi() {
-		super.hienThi();
-	}
+	
+
+    
 }
----------------------------------------------------------------------------
+-----------------------------------------------------
+
+    package TietKiem;
+
 class TKBAC extends TietKiem {
-	private boolean thuongXuyen;
+	private final boolean thuongXuyen;
 
 	public TKBAC(String hoTen, double soTien, byte soThang, boolean thuongXuyen) {
 		super(hoTen, soTien, soThang);
@@ -89,14 +94,32 @@ class TKBAC extends TietKiem {
 		}
 	}
 
-	public void hienThi() {
-		super.hienThi();
+		public void hienThi() {
+		System.out.println(" " + hoTen + " " + soTien + "     " + soThang);
 		System.out.println(" " + thuongXuyen);
 	}
+
+    
 }
----------------------------------------------------------------
+-------------------------------------------------------------
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Vector;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*package tietkiem;*/
+
 class DSKH {
-	private Vector<TietKiem> ds;
+	private final Vector<TietKiem> ds;
 
 	public DSKH() {
 		ds = new Vector<TietKiem>();
@@ -116,8 +139,7 @@ class DSKH {
 			}
 			f.close();
 			fo.close();
-		} catch (IOException e) {
-		} catch (ClassNotFoundException e2) {
+		} catch (    IOException | ClassNotFoundException e) {
 		}
 	}
 
@@ -152,7 +174,8 @@ class DSKH {
 	}
 
 }
-----------------------------------------------------------------
+------------------------------------------------------
+
 class SD {
 	public static void main(String[] args) {
 		DSKH ds = new DSKH("DSKH.dat");
