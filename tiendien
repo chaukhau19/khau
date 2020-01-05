@@ -1,0 +1,95 @@
+public abstract class TienDien {
+
+    protected String tenKH;
+    protected int soLuong;
+
+    public TienDien(String tenKH, int soLuong) {
+        this.tenKH = tenKH;
+        this.soLuong = soLuong;
+    }
+
+    public abstract long tinhTien();
+
+    public String layTenKH() {
+        return tenKH;
+    }
+
+    public int laySoLuong() {
+        return soLuong;
+    }
+
+    public void hienThi() {
+        System.out.printf("\nTen KH: " + layTenKH()
+                + "\nTien dien: " + tinhTien() + " dong\n");
+    }
+}
+
+-------------------------------------------------------------------------
+public class TDToChuc extends TienDien {
+
+    private int mucDo;
+
+    public TDToChuc(String tenKH, int soLuong, int mucDo) {
+        super(tenKH, soLuong);
+        this.mucDo = mucDo;
+    }
+
+    @Override
+    public long tinhTien() {
+        if (layMucDo() == 1) {
+            if (laySoLuong() <= 1000) {
+                return laySoLuong() * 400;
+            } else {
+                return 1000 * 400 + (laySoLuong() - 1000) * 1000;
+            }
+        } else {
+            if (layMucDo() == 2) {
+                if (laySoLuong() <= 2000) {
+                    return laySoLuong() * 400;
+                } else {
+                    return 2000 * 400 + (laySoLuong() - 2000) * 1000;
+                }
+            } else {
+                if (laySoLuong() <= 5000) {
+                    return laySoLuong() * 400;
+                } else {
+                    return 5000 * 400 + (laySoLuong() - 5000) * 1000;
+                }
+            }
+        }
+    }
+
+    public int layMucDo() {
+        return mucDo;
+    }
+}
+
+-------------------------------------------------------------------------------------
+public class TDHoCaNhan extends TienDien {
+
+    public TDHoCaNhan(String tenKH, int soLuong) {
+        super(tenKH, soLuong);
+    }
+
+    @Override
+    public long tinhTien() {
+        if (laySoLuong() <= 100) {
+            return laySoLuong() * 500;
+        } else {
+            return 100 * 500 + (laySoLuong() - 100) * 800;
+        }
+    }
+}
+
+ 
+public static void main(String[] args) {
+        TienDien td[] = new TienDien[4];
+        td[0] = new TDHoCaNhan("Nguyen Van A", 80);
+        td[1] = new TDHoCaNhan("Nguyen Van B", 120);
+        td[2] = new TDToChuc("Cong Ty VNM", 2100, 2);
+        td[3] = new TDToChuc("Cong Ty SGK", 4800, 3);
+        for (int i = 0; i < td.length; i++) {
+            td[i].hienThi();
+        }
+    }
+}
