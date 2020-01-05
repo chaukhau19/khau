@@ -1,0 +1,143 @@
+public class HangNhapKhau extends MatHang {
+	private boolean uuTien;
+	public HangNhapKhau(String th,double dg) {
+		super(th,dg);
+	}
+	public double thue() {
+		if(uuTien==true)
+			return 0.1;
+		else return 0.2;
+	}
+
+}
+
+
+
+-----------------------------------------------
+public class HangNoiDia extends MatHang {
+	public HangNoiDia(String th,double dg) {
+		super(th,dg);
+	}
+	public double thue() {
+		return 0.1;
+	}
+	
+
+}
+
+
+
+-----------------------------------------
+public class HoaDon {
+	private KhachHang khachHang;
+	private MatHang matHang;
+	private int soLuong;
+	public HoaDon(KhachHang kh,MatHang mh,int sl) {
+		khachHang=kh;
+		matHang=mh;
+		soLuong=sl;
+	}
+	public KhachHang layKhachHang() {
+		return khachHang;
+	}
+	public MatHang layMatHang() {
+		return matHang;
+	}
+	public int laySoLuong() {
+		return soLuong;
+	}
+	public double thanhTien() {
+		double 
+		tienHang=matHang.layDonGia()*soLuong;
+		return tienHang+(tienHang*matHang.thue());
+	}
+
+}
+
+
+
+------------------------------------------------
+public class KhachHang {
+	private String tenKhachHang;
+	private String diaChi;
+	public KhachHang(String tkh,String dc) {
+		tenKhachHang=tkh;
+		diaChi=dc;
+	}
+	public String layTenKhachHang() {
+		return tenKhachHang;
+	}
+	public String layDiaChi() {
+		return diaChi;
+	}
+
+}
+
+
+
+-------------------------------------------------
+abstract public class MatHang {
+	protected String tenHang;
+	protected double donGia;
+	public MatHang(String th,double dg) {
+		tenHang=th;
+		donGia=dg;
+	}
+	public String layTenHang() {
+		return tenHang;
+	}
+	public void setTenHang(String th ) {
+		tenHang=th;
+	}
+	public double layDonGia() {
+		return donGia;
+	}
+	public void setDonGia(double dg) {
+		donGia=dg;
+	}
+	abstract public double thue();
+	
+
+}
+
+
+
+--------------------------------------------------
+import java.util.Vector;
+
+public class SuDung {
+	public static void main(String args[]){
+        Vector hoaDon=new Vector();
+        KhachHang KH1=new KhachHang("Binh","Quy Nhon");
+        KhachHang KH2=new KhachHang("Luyen","Phu Cat");
+        KhachHang KH3=new KhachHang("Khau","Phu My");
+        HoaDon HD1=new HoaDon(KH1,new HangNoiDia("Sua tuoi",30000),5);
+        HoaDon HD2=new HoaDon(KH1,new HangNhapKhau("Iphone X",20000000),1);
+        HoaDon HD3=new HoaDon(KH2,new HangNoiDia("Gao",13000),5);
+        HoaDon HD4=new HoaDon(KH2,new HangNhapKhau("Tu Lanh",10000000),1);
+        HoaDon HD5=new HoaDon(KH3,new HangNoiDia("Cam tuoi",30000),5);
+        hoaDon.addElement(HD1);
+        hoaDon.addElement(HD2);
+        hoaDon.addElement(HD3);
+        hoaDon.addElement(HD4);
+        hoaDon.addElement(HD5);
+        
+        for(int i=0;i<hoaDon.size();i++){
+            System.out.println("Thông tin hóa đơn thứ "+(i+1));
+            System.out.println("1.Khách hàng: "
+                    +((HoaDon)hoaDon.elementAt(i)).layKhachHang().layTenKhachHang()
+                    +"| Địa Chỉ: "+((HoaDon)hoaDon.elementAt(i)).layKhachHang().layDiaChi());
+            System.out.println("2.Tên hàng: "
+                    +((HoaDon)hoaDon.elementAt(i)).layMatHang().layTenHang()
+                    +"| Đơn giá: "+((HoaDon)hoaDon.elementAt(i)).layMatHang().layDonGia());
+            System.out.println("3.Số lượng: "+((HoaDon)hoaDon.elementAt(i)).laySoLuong());
+            System.out.println("4.Thành tiền: "+((HoaDon)hoaDon.elementAt(i)).thanhTien());
+        }
+        
+        double TongThanhTien=0;
+        for(int i=0;i<hoaDon.size();i++)
+            TongThanhTien+=((HoaDon)hoaDon.elementAt(i)).thanhTien();
+        
+        System.out.println("Tổng thành tiền của 5 hóa đơn: "+TongThanhTien);
+    }
+}
