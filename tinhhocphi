@@ -1,3 +1,4 @@
+
 package HocPhi;
 
 abstract class HocPhi 
@@ -33,7 +34,10 @@ abstract class HocPhi
 		System.out.println(""+hoTen+""+nganh+""+doiTuong+""+soTCHocLai);
 	}
 }
----------------------------------------------------------------------
+
+---------------------------------------------
+package hocphi;
+
 class HocPhiDH extends HocPhi
 {
 	public HocPhiDH(String ht, String n, String dt, int stc)
@@ -88,12 +92,23 @@ class HocPhiDH extends HocPhi
 	public int hocPhiTong() {
 		return (hocPhiHK()+hocPhiHL());
 	}
-	public void hienThi()
-	{
-		super.hienThi();
-	}
+	
+
+    private String layNganh() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String layDoiTuong() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private int laySoTinChiHL() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
-------------------------------------------------------------------
+------------------------------------------------------------
+package hocphi;
+
 class HocPhiCH extends HocPhi
 {
 	public HocPhiCH(String ht, String n, String dt, int stc)
@@ -149,22 +164,44 @@ class HocPhiCH extends HocPhi
 	{
 		return hocPhiHK()+hocPhiHL();
 	}
-	public void hienThi()
-	{
-		super.hienThi();
-	}
+	
+
+    private String layNganh() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String layDoiTuong() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private int laySoTinChiHL() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
------------------------------------------------------
-class SuDungg
+---------------------------------------------------------------
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package hocphi;
+
+/**
+ *
+ * @author Admin
+ */
+public class SD 
 {
-	public static void main(String a[])
+	public static void main(String args[])
 	{
-		HocPhiDH vd1 = new HocPhiDH("Men cam suc", "103", "04", 12);
-		System.out.println(vd1.hocPhiTong());
+                HocPhi hpp=new HocPhiDH("abc","101","1",5);
+                hpp.hienThi();
 	}
 }
------------------------
------------------------
+    
+
+------------------------------------------------
 package HocPhi;
 import java.awt.*;
 import java.awt.event.ActionEvent;
