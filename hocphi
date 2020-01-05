@@ -1,0 +1,165 @@
+package HocPhi;
+
+abstract class HocPhi 
+{
+	protected String hoTen;
+	protected String nganh;
+	protected String doiTuong;
+	protected int soTCHocLai;
+	public HocPhi(String ht, String n, String dt, int stc)
+	{
+		hoTen=ht;
+		nganh=n;
+		doiTuong=dt;
+		soTCHocLai=stc;
+	}
+	abstract public int hocPhiHK();
+	abstract public int hocPhiHL();
+	abstract public int hocPhiTong();
+	public String layNganh()
+	{
+		return nganh;
+	}
+	public String layDoiTuong()
+	{
+		return doiTuong;
+	}
+	public int laySoTinChiHL()
+	{
+		return soTCHocLai;
+	}
+	public void hienThi()
+	{
+		System.out.println(""+hoTen+""+nganh+""+doiTuong+""+soTCHocLai);
+	}
+}
+---------------------------------------------------------------------
+class HocPhiDH extends HocPhi
+{
+	public HocPhiDH(String ht, String n, String dt, int stc)
+	{
+		super(ht, n, dt, stc);
+	}
+	public int hocPhiHK()
+	{
+		if(layNganh() == "101")
+		{
+			if(layDoiTuong() == "01")
+				return 0;
+			else if(layDoiTuong() == "02")
+				return 0;
+			else if(layDoiTuong() == "03")
+				return 0;
+			else
+				return 0;
+		}
+		else if(layNganh() == "102")
+		{
+			if(layDoiTuong() == "01")
+				return 0;
+			else if(layDoiTuong() == "02")
+				return (int) (3000000/0.7);
+			else if(layDoiTuong() == "03")
+				return (int) (3000000/0.5);
+			else
+				return (int) (3000000);
+		}
+		else
+		{
+			if(layDoiTuong() == "01")
+				return 0;
+			else if(layDoiTuong() == "02")
+				return (int) (2750000/0.7);
+			else if(layDoiTuong() == "03")
+				return (int) (2750000/0.5);
+			else
+				return (int) (2750000);
+		}
+	}
+	public int hocPhiHL() 
+	{
+		if(layNganh() == "101")
+			return (int) (200000*laySoTinChiHL());
+		else if(layNganh() == "102")
+			return (int) (225000*laySoTinChiHL());
+		else
+			return (int) (200000*laySoTinChiHL());
+	}
+	public int hocPhiTong() {
+		return (hocPhiHK()+hocPhiHL());
+	}
+	public void hienThi()
+	{
+		super.hienThi();
+	}
+}
+------------------------------------------------------------------
+class HocPhiCH extends HocPhi
+{
+	public HocPhiCH(String ht, String n, String dt, int stc)
+	{
+		super(ht, n, dt, stc);
+	}
+	public int hocPhiHK() 
+	{
+		if(layNganh() == "101")
+		{
+			if(layDoiTuong() == "01")
+				return 0;
+			else if(layDoiTuong() == "02")
+				return 0;
+			else if(layDoiTuong() == "03")
+				return 0;
+			else
+				return 0;
+		}
+		else if(layNganh() == "102")
+		{
+			if(layDoiTuong() == "01")
+				return 0;
+			else if(layDoiTuong() == "02")
+				return (int) (3000000/0.7*1.5);
+			else if(layDoiTuong() == "03")
+				return (int) (3000000/0.5*1.5);
+			else
+				return (int) (3000000*1.5);
+		}
+		else
+		{
+			if(layDoiTuong() == "01")
+				return 0;
+			else if(layDoiTuong() == "02")
+				return (int) (2750000/0.7*1.5);
+			else if(layDoiTuong() == "03")
+				return (int) (2750000/0.5*1.5);
+			else
+				return (int) (2750000*1.5);
+		}
+	}
+	public int hocPhiHL() 
+	{
+		if(layNganh() == "101")
+			return (int) (200000*laySoTinChiHL()*1.5);
+		else if(layNganh() == "102")
+			return (int) (225000*laySoTinChiHL()*1.5);
+		else
+			return (int) (200000*laySoTinChiHL()*1.5);
+	}
+	public int hocPhiTong() 
+	{
+		return hocPhiHK()+hocPhiHL();
+	}
+	public void hienThi()
+	{
+		super.hienThi();
+	}
+}
+-----------------------------------------------------
+class SuDungg
+{
+	public static void main(String a[])
+	{
+		HocPhiDH vd1 = new HocPhiDH("Men cam suc", "103", "04", 12);
+		System.out.println(vd1.hocPhiTong());
+	}
+}
