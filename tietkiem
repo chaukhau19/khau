@@ -1,0 +1,166 @@
+package TietKiem;
+
+import java.io.*;
+import java.util.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Vector;
+
+abstract class TietKiem implements Serializable {
+	protected String hoTen;
+	protected double soTien;
+	protected int soThang;
+
+	public TietKiem(String hoTen, double soTien, int soThang) {
+		this.hoTen = hoTen;
+		this.soTien = soTien;
+		this.soThang = soThang;
+	}
+
+	public int laySoThang() {
+		return soThang;
+	}
+
+	public double laySoTien() {
+		return soTien;
+	}
+
+	abstract public double tinhTienLai();
+
+	public void hienThi() {
+		System.out.println(" " + hoTen + " " + soTien + "     " + soThang);
+	}
+}
+--------------------------------------------------------------------------------------
+class TKABC extends TietKiem {
+	public TKABC(String hoTen, double soTien, int soThang) {
+		super(hoTen, soTien, soThang);
+	}
+
+	public double tinhTienLai() {
+		if (laySoThang() == 1)
+			return laySoTien() * 0.006;
+		else if (laySoThang() == 3)
+			return laySoTien() * 0.02;
+		else if (laySoThang() == 6)
+			return laySoTien() * 0.045;
+		else
+			return laySoTien() * 0.1;
+	}
+
+	public void hienThi() {
+		super.hienThi();
+	}
+}
+---------------------------------------------------------------------------
+class TKBAC extends TietKiem {
+	private boolean thuongXuyen;
+
+	public TKBAC(String hoTen, double soTien, byte soThang, boolean thuongXuyen) {
+		super(hoTen, soTien, soThang);
+		this.thuongXuyen = thuongXuyen;
+	}
+
+	public boolean layThuongXuyen() {
+		return thuongXuyen;
+	}
+
+	public double tinhTienLai() {
+		if (layThuongXuyen() == true) {
+			if (laySoThang() == 1)
+				return laySoTien() * 0.007;
+			else if (laySoThang() == 3)
+				return laySoTien() * 0.028;
+			else if (laySoThang() == 6)
+				return laySoTien() * 0.06;
+			else
+				return laySoTien() * 0.13;
+		} else {
+			if (laySoThang() == 1)
+				return laySoTien() * 0.006;
+			else if (laySoThang() == 3)
+				return laySoTien() * 0.02;
+			else if (laySoThang() == 6)
+				return laySoTien() * 0.045;
+			else
+				return laySoTien() * 0.1;
+		}
+	}
+
+	public void hienThi() {
+		super.hienThi();
+		System.out.println(" " + thuongXuyen);
+	}
+}
+---------------------------------------------------------------
+class DSKH {
+	private Vector<TietKiem> ds;
+
+	public DSKH() {
+		ds = new Vector<TietKiem>();
+	}
+
+	public DSKH(String tenTep) {
+		TietKiem s;
+		FileInputStream f = null;
+		ObjectInputStream fo = null;
+		ds = new Vector<TietKiem>();
+		try {
+			f = new FileInputStream(tenTep);
+			fo = new ObjectInputStream(f);
+			while (f.available() > 0) {
+				s = (TietKiem) fo.readObject();
+				ds.addElement(s);
+			}
+			f.close();
+			fo.close();
+		} catch (IOException e) {
+		} catch (ClassNotFoundException e2) {
+		}
+	}
+
+	public void them(TietKiem s) {
+		ds.addElement(s);
+	}
+
+	public void hienThi() {
+		for (TietKiem s : ds)
+			s.hienThi();
+	}
+
+	public void ghiTep(String tenTep) {
+		try {
+			FileOutputStream f = new FileOutputStream(tenTep);
+			ObjectOutputStream fo = new ObjectOutputStream(f);
+			for (TietKiem s : ds) {
+				fo.writeObject(ds);
+			}
+			f.close();
+			fo.close();
+		} catch (IOException e) {
+		}
+	}
+
+	public double tongTien() {
+		double t;
+		for(TietKiem s: ds) {
+			return t = s.soTien + s.tinhTienLai(); 
+		}
+		return t = tongTien();
+	}
+
+}
+----------------------------------------------------------------
+class SD {
+	public static void main(String[] args) {
+		DSKH ds = new DSKH("DSKH.dat");
+		TietKiem s;
+		s= new TKABC("tri ngu",20000,3);
+		ds.them(s);
+		s.hienThi();
+		System.out.println("tong tien la:    " + ds.tongTien());
+		
+	}
+}
