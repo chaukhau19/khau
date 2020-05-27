@@ -1,0 +1,54 @@
+#include<stdio.h>
+
+void docMaTran(int a[][100], int n,int m,FILE *f)
+{
+	int i,j;
+	for(i=0;i<n;i++)
+		for(j=0;j<m;j++)
+			fscanf(f,"%d",&a[i][j]);
+}
+void inMaTran(int a[][100], int n,int m,FILE *f)
+{
+	int i,j;
+	for(i=0;i<n;i++){
+		for(j=0;j<m;j++)
+			fprintf(f,"%d ",a[i][j]);
+		fprintf(f,"\n");
+	}	
+}
+void swap(int *a,int *b){
+	int tg;
+	tg=*a;
+	*a=*b;
+	*b=tg;
+}
+void MTKetQua(int a[][100],int n,int m){
+	int i,j,max,jmax;
+	for(i=0;i<n;i++){
+		max=0;
+		for(j=0;j<m;j++)
+			if(a[i][j]>max){
+				max=a[i][j];
+				jmax=j;
+			}
+		swap(&a[i][i],&a[i][jmax]);
+	}
+}
+
+void main(){
+	int a[100][100];
+	FILE *f1,*f2;
+	int i,n,cap;
+	f1=fopen("input3.3","r");
+	f2=fopen("output3.3","w");
+	fscanf(f1,"%d",&n);
+	for(i=1;i<=n;i++){
+		fscanf(f1,"%d",&cap);
+		docMaTran(a,cap,cap,f1);
+		MTKetQua(a,cap,cap);
+		fprintf(f2,"%d\n",cap);
+		inMaTran(a,cap,cap,f2);
+	}
+	close(f1);
+	close(f2);
+}
