@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<string.h>
+
+void chuanHoaXau(char s[])
+{
+	//xoa ky tu trang dau chuoi
+	int i=0,j;
+	while(s[i]==' ')
+	{
+		j=i;
+		while(j<strlen(s))
+		{
+			s[j]=s[j+1];
+			j++;
+		}
+	}
+	
+	//xoa ky tu trang cuoi chuoi
+	i=strlen(s)-1;
+	while(s[i]==' ')
+	{
+		s[i]='\0';
+		i=i-1;
+	}
+	
+	//xoa ky tu trang giua chuoi
+	i=0;
+	while(i<strlen(s))
+	{
+		if(s[i]==' ' && s[i+1]==' ')
+		{
+			j=i;
+			while(j<strlen(s))
+			{
+			s[j]=s[j+1];
+			j++;
+			}
+		}
+		else i++;
+	}
+	
+	//chuyen chuoi sang chu thuong
+	for(i=0;i<strlen(s);i++)
+		if(s[i]>=65 && s[i]<=90)
+			s[i]=s[i]+32;
+			
+	//viet hoa dau chuoi
+	s[0]=s[0]-32;
+	
+	//viet hoa moi tu trong chuoi
+	for(i=1;i<strlen(s);i++)
+		if(s[i]==' ')
+			s[i+1]=s[i+1]-32;
+}
+
+void main()
+{
+	char s[80];
+	int i,n;
+	FILE *f1,*f2;
+	f1=fopen("bai4.3.inp","r");
+	f2=fopen("bai4.3.out","w");
+	fscanf(f1,"%d",&n);
+	for(i=1;i<=n;i++)
+	{
+		fscanf(f1,"\n");
+		fgets(s,80,f1);
+		if(s[strlen(s)-1]=='\n')
+			s[strlen(s)-1]='\0';
+		chuanHoaXau(s);
+		fprintf(f2,"%s\n",s);
+	}
+	close(f1);
+	close(f2);
+}
