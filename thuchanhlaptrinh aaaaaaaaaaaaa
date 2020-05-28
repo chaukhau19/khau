@@ -73,7 +73,87 @@ chuyển phần tử lớn nhất nằm trên mỗi dòng với phần tử nằ
 --------------------------------------------------------------
 Bài thực hành số 4: Xâu ký tự
 1.Viết chương trình cộng hai số nguyên dương bất kỳ (không quá 256 chữ số).
+#include<stdio.h>
+#include<string.h>
 
+int charToInt(char x)
+{
+	return (int)x-48;
+}
+char intToChar(int x)
+{
+	return (char)x+48;
+}
+void locChuoi(char s[])
+{
+	int i=0,j;
+	while(s[i]=='0')
+	{
+		for(j=i;j<strlen(s);j++)
+			s[j]=s[j+1];
+	}
+}
+void daoChuoi(char s[])
+{
+	int i,len=strlen(s);
+	char temp,mod;
+	for(i=0;i<len/2;i++){
+		temp=s[i];
+		s[i]=s[len-i-1];
+		s[len-i-1]=temp;
+	}
+}
+void cong(char s1[],char s2[],char s3[])
+{
+	locChuoi(s1);
+	locChuoi(s2);
+	daoChuoi(s1);
+	daoChuoi(s2);
+	int i,nho=0,temp;
+	
+	//can bang 2 xau
+	if(strlen(s1)>strlen(s2)){
+		for(i=strlen(s2);i<strlen(s1);i++)
+			s2[i]='0'; s2[i]='\0';
+	}
+	if(strlen(s1)<strlen(s2)){
+		for(i=strlen(s1);i<strlen(s2);i++)
+			s1[i]='0'; s1[i]='\0';
+	}
+	
+	//cong 2 xau
+	for(i=0;i<strlen(s1);i++)
+	{
+		temp=(charToInt(s1[i])+charToInt(s2[i])+nho)%10;
+		nho=(charToInt(s1[i])+charToInt(s2[i])+nho)/10;
+		s3[i]=intToChar(temp); s3[i+1]='\0';
+	}
+	if(nho>0)
+	{ 
+		s3[i]=intToChar(nho); s3[i+1]='\0';
+	}
+	daoChuoi(s3);
+}
+void main()
+{
+	FILE *fi,*fo;
+	char s1[256],s2[256],s3[256];
+	int i,j,n;
+	fi=fopen("bai4.1.inp","r");
+	fo=fopen("bai4.1.out","w");
+	fscanf(fi,"%d",&n);
+	for(i=1;i<=n;i++)
+	{
+		fscanf(fi,"%s",&s1);
+		fscanf(fi,"%s",&s2);
+		s3[0]='\0';
+		cong(s1,s2,s3);
+		fprintf(fo,"%s\n",s3);
+	}
+	fclose(fi);
+	fclose(fo);
+	getch();
+}
 2.Cho một danh sách các số điện thoại, hãy xác định danh sách này có số điện thoại nào là phần trước của số khác hay không? 
 Nếu không thì danh sách này được gọi là nhất quán.
  Giả sử một danh sách có chứa các số điện thoại sau:
@@ -86,12 +166,127 @@ vì vậy danh sách này là không nhất quán.
 3.Một xâu họ tên được coi là viết chuẩn nếu chữ cái đầu tiên mỗi từ được viết hoa, các chữ cái khác viết thường. 
 Các từ cách nhau đúng một dấu cách và không có khoảng trống thừa ở đầu và cuối xâu. 
 Hãy viết chương trình đưa các xâu họ tên về dạng chuẩn.
+#include<stdio.h>
+#include<string.h>
+
+void chuanHoaXau(char s[])
+    {
+	//xoa ky tu trang dau chuoi
+	int i=0,j;
+	while(s[i]==' '){
+		j=i;
+		while(j<strlen(s)){
+			s[j]=s[j+1];
+			j++;
+		}
+	}
+	
+	//xoa ky tu trang cuoi chuoi
+	i=strlen(s)-1;
+	while(s[i]==' '){
+		s[i]='\0';
+		i=i-1;
+	}
+	
+	//xoa ky tu trang giua chuoi
+	i=0;
+	while(i<strlen(s)){
+		if(s[i]==' ' && s[i+1]==' '){
+			j=i;
+			while(j<strlen(s)){
+			s[j]=s[j+1];
+			j++;
+			}
+		}else i++;
+	}
+	
+	//chuyen chuoi sang chu thuong
+	for(i=0;i<strlen(s);i++)
+		if(s[i]>=65 && s[i]<=90)
+			s[i]=s[i]+32;
+			
+	//viet hoa dau chuoi
+	s[0]=s[0]-32;
+	
+	//viet hoa moi tu trong chuoi
+	for(i=1;i<strlen(s);i++)
+		if(s[i]==' ')
+			s[i+1]=s[i+1]-32;
+}
+
+void main(){
+	char s[80];
+	int i,n;
+	FILE *f1,*f2;
+	f1=fopen("bai4.3.inp","r");
+	f2=fopen("bai4.3.out","w");
+	fscanf(f1,"%d",&n);
+	for(i=1;i<=n;i++){
+		fscanf(f1,"\n");
+		fgets(s,80,f1);
+		if(s[strlen(s)-1]=='\n')
+			s[strlen(s)-1]='\0';
+		chuanHoaXau(s);
+		fprintf(f2,"%s\n",s);
+	}
+	close(f1);
+	close(f2);
+}
 --------------------------------------------------------------------
 Bài thực hành số 5: File và cấu trúc
 1.Viết chương trình đếm số từ khác nhau của một file văn bản.
+#include<stdio.h>
+
+struct tu{
+	char s[10];
+}typedef tu;
+
+void main(){
+	FILE *f1,*f2;
+	tu x[50];
+	int i=0,j,k,dem=0;
+	f1=fopen("bai5.1.inp","r");
+	f2=fopen("bai5.1.out","w");
+	while(!feof(f1)){
+		fscanf(f1,"%s",x[i].s);
+		i++;
+	}
+	for(j=0;j<i-1;j++)
+		for(k=j+1;k<i;k++)
+			if(strcmp(x[j].s,x[k].s)==0)
+				dem++;
+	
+	fprintf(f2,"%d",i-dem);
+	close(f1);
+	close(f2);
+}
 
 2.Cho một file văn bản chỉ bao gồm các số nguyên không quá 9 chữ số. 
 Viết chương trình đếm xem trong file đó có bao nhiêu số nguyên tố khác nhau.
+#include<stdio.h>
+
+int NT;
+
+void main(){
+	FILE *f1,*f2;
+	int x[100];
+	int i=0,j,k,dem=0;
+	f1=fopen("bai5.2.inp","r");
+	f2=fopen("bai5.2.out","w");
+	while(!feof(f1)){
+		fscanf(f1,"%d",x[i]);
+		if(NT(x[i])==1)
+		i++;
+	}
+	for(j=0;j<i-1;j++)
+		for(k=j+1;k<i;k++)
+			if(x[j]==x[k] && NT(x[j])==1)
+				dem++;
+	
+	fprintf(f2,"%d",i-dem);
+	close(f1);
+	close(f2);
+}
 
 3.Cho một file văn bản bất kỳ. Hãy tìm ra từ thỏa mãn tính chất thuận nghịch có độ dài lớn nhất trong file đó 
 và cho biết từ đó xuất hiện bao nhiêu lần. 
