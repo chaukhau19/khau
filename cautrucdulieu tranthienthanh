@@ -1,0 +1,1323 @@
+1
+#include <stdio.h>
+#include <string.h>
+#include <conio.h>
+
+#define max 100
+
+struct ThueBao
+{
+	char tenTB[30];
+	char diaChi[50];
+	char soDT[10][11];
+	int soSoDT;
+};	
+
+struct DanhBa 
+{
+	struct ThueBao db[max];
+	int			soTB;
+};
+// Nhap thue bao luu vao o nho x
+void nhapThueBao(struct ThueBao *x)
+{
+	int i;
+  	printf("Nhap ten thue bao:"); gets(x->tenTB);
+  	printf("Nhap dia chi thue bao:"); gets(x->diaChi);
+	printf("Nhap so so dien thoai cua thue bao: "); 
+	scanf("%d",&x->soSoDT);
+	fflush(stdin);
+	for (i=0; i<x->soSoDT; i++)
+	{
+   		printf("Nhap so dien thoai thu %d ", i," : "); gets(x->soDT[i]);
+	}
+}
+//In thue bao x len man hinh
+void inThueBao(struct ThueBao x)
+{
+	int i;
+  	printf("Ten thue bao: %s \n",x.tenTB);
+  	printf("Dia chi thue bao: %s \n",x.diaChi);
+	printf("Cac so dien thoai cua thue bao:"); 
+	for (i=0; i<=x.soSoDT; i++)
+   		printf("%s ",x.soDT[i]);	
+}
+//Nhap mot danh ba
+void nhapDanhBa(struct DanhBa *d)
+{
+	int i;
+	printf("So thue bao: "); scanf("%d",&d->soTB);
+	fflush(stdin);
+	for(i=0; i<d->soTB;i++)
+		nhapThueBao(&d->db[i]);
+}
+
+void inDanhBa(struct DanhBa d)
+{
+	int i;
+	for(i=0; i<d.soTB;i++)
+		inThueBao(d.db[i]);
+}
+// Them 1 thue bao vao vi tri k
+void themThueBao(struct DanhBa *d, struct ThueBao x, int k)
+{
+	int i,j;
+	for(i=d->soTB; i>k; i--)
+		d->db[i]=d->db[i-1];
+	d->db[k] = x;
+	d->soTB++;
+}
+// Xoa mot thue bao tai vi tri k trong danh sach
+void xoaThueBao(struct DanhBa *d, struct ThueBao x, int k)
+{
+	int i;
+	for( i = d -> soTB - 1; i >  k; i++)
+	d -> db[i] = d -> db[ i +1];
+	d -> soTB --; 
+}
+// Tim thue bao khi biet ten khach hang
+void timThueBao(struct DanhBa d, char x[])
+{
+	int i;
+	for(i=0; i<d.soTB; i++)
+	if(d.db[i].tenTB==x) return i;
+	return -1;
+}
+void main()
+{
+	struct DanhBa db;
+	struct ThueBao t;
+	nhapDanhBa(&db);
+	inDanhBa(db);
+	printf("\nthem thue bao\n");
+	nhapThueBao(&t);
+	themThueBao(&db,t,1);
+	inDanhBa(db);
+//	xoaThueBao(&db,"");
+//	timThueBao(&db,"thu")
+}
+--------------------------------
+2
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct ThueBao
+{
+	char tenTB[30];
+	char diaChi[50];
+	char soDT[10][11];
+	int soSoDT;
+};	
+
+struct DanhBa 
+{
+	struct ThueBao duLieu;
+	struct DanhBa *lienKet;
+};
+// Nhap thue bao luu vao o nho x
+void nhapThueBao(struct ThueBao *x)
+{
+	int i;
+  	printf("Nhap ten thue bao:"); gets(x->tenTB);
+  	printf("Nhap dia chi thue bao:"); gets(x->diaChi);
+	printf("Nhap so so dien thoai cua thue bao:"); 
+	scanf("%d",&x->soSoDT);
+	fflush(stdin);
+	for (i=0; i<x->soSoDT; i++)
+	{
+   		printf("Nhap so dien thoai thu %d ", i," : "); gets(x->soDT[i]);
+	}
+}
+//In thue bao x len man hinh
+void inThueBao(struct ThueBao x)
+{
+	int i;
+  	printf("Ten thue bao: %s \n",x.tenTB);
+  	printf("Dia chi thue bao: %s \n",x.diaChi);
+	printf("Cac so dien thoai cua thue bao:"); 
+	for (i=0; i<=x.soSoDT; i++)
+   		printf("%s ",x.soDT[i]);
+	printf("\n");	   	
+}
+void themCuoi(struct DanhBa **dau, struct ThueBao x)
+{
+	struct DanhBa *q,*p; int i;
+	q = (struct DanhBa*) malloc(sizeof(struct DanhBa));
+	q->duLieu=x;
+	q->lienKet=NULL;	
+	if(*dau==NULL)
+		*dau=q;
+	else
+		{
+			p=*dau;
+			while(p->lienKet!=NULL) p=p->lienKet;
+			p->lienKet=q;
+		}		
+}
+//in danh ba
+void inDanhBa(struct DanhBa *d)
+{
+	struct DanhBa *p;
+	p=d;
+	while (p!=NULL)
+	{
+		inThueBao(p->duLieu);
+		p=p->lienKet;
+	}
+}
+// Dem so thue bao trong danh ba
+int demSo(struct DanhBa *dau)
+{
+	struct DanhBa *p;
+	int dem;
+	dem=0;
+	p=dau;
+	while(p!=NULL)
+	{
+		if( p->lienKet!=NULL)
+		{
+			dem = dem +1;
+			p = p->lienKet;
+		}
+	}
+	return printf (" so thue bao trong danh ba : %d", dem);
+}
+// xoa 1 thue bao theo ten
+struct DanhBa* xoatenTB(struct DanhBa**dau, char *x)
+{
+	struct DanhBa*p,*p1;
+	while (p!=NULL)
+	{
+		if(strcmp(p->duLieu.tenTB,x)==0)
+		{
+			*dau=p->lienKet;
+			free(p);
+		}
+		else
+		{
+			p1 = p -> lienKet;
+			if (strcmp(p->duLieu.tenTB,x)==0)
+		{
+		p1 =p->lienKet;
+		p->lienKet = p1->lienKet;
+		free(p1);
+	
+	}
+}
+}
+}
+void themDau(struct DanhBa **dau, struct ThueBao x)
+{
+	struct DanhBa *q,*p; int i;
+	q = (struct DanhBa*) malloc(sizeof(struct DanhBa));
+	q->duLieu=x;
+	q->lienKet=*dau;
+	*dau=q;	
+
+}
+
+void themSau(struct DanhBa *dau,struct ThueBao x)
+{
+	struct DanhBa *p,*q;
+
+	q = (struct DanhBa*) malloc(sizeof(struct DanhBa));
+	p=dau;
+	while(p!=NULL)
+	{
+		if(strcmp(p->duLieu.tenTB , x)==0)
+		{
+			q= p->lienKet;
+			q->duLieu=;
+			*dau=q;
+				
+		}
+		else
+			return NULL;
+	}	
+}
+
+
+int main()
+{
+	struct DanhBa *db=NULL; struct ThueBao x;
+	nhapThueBao(&x);
+	themCuoi(&db,x);
+	nhapThueBao(&x);
+	themDau(&db,x);
+	inDanhBa(db);
+	demSo(db);
+	printf("co %d sdt",demSo(db));
+	getch();
+	return 0;
+}
+----------------------------------------
+3
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct ThueBao
+{
+	char tenTB[30];
+	char diaChi[50];
+	char soDT[10][11];
+	int soSoDT;
+};	
+
+struct DanhBa 
+{
+	struct ThueBao duLieu;
+	struct DanhBa *lkTruoc,*lkSau;
+};
+// Nhap thue bao luu vao o nho x
+void nhapThueBao(struct ThueBao *x)
+{
+	int i;
+  	printf("Nhap ten thue bao:"); gets(x->tenTB);
+  	printf("Nhap dia chi thue bao:"); gets(x->diaChi);
+	printf("Nhap so so dien thoai cua thue bao:"); 
+	scanf("%d",&x->soSoDT);
+	fflush(stdin);
+	for (i=0; i<x->soSoDT; i++)
+	{
+   		printf("Nhap so dien thoai thu %d ", i," : "); gets(x->soDT[i]);
+	}
+}
+//In thue bao x len man hinh
+void inThueBao(struct ThueBao x)
+{
+	int i;
+  	printf("Ten thue bao: %s \n",x.tenTB);
+  	printf("Dia chi thue bao: %s \n",x.diaChi);
+	printf("Cac so dien thoai cua thue bao:"); 
+	for (i=0; i<=x.soSoDT; i++)
+   		printf("%s ",x.soDT[i]);
+	printf("\n");	   	
+}
+void themCuoi(struct DanhBa **dau, struct ThueBao x)
+{
+   	struct DanhBa *q, *p;
+	q = (struct DanhBa*) malloc(sizeof(struct DanhBa));
+	q->duLieu =x;
+	q->lkSau=NULL;	
+	if(*dau==NULL)
+		{ q->lkTruoc=NULL; *dau=q;}
+	else
+		{
+			p=*dau;
+			while(p->lkSau!=NULL) p=p->lkSau;
+			q->lkTruoc=p;
+p->lkSau=q;
+		}
+}
+//in danh ba
+void inDanhBa(struct DanhBa *d)
+{
+	struct DanhBa *p;
+	p=d;
+	while (p!=NULL)
+	{
+		inThueBao(p->duLieu);
+		p=p->lkSau;
+	}
+}
+void xoa(struct DanhBa **dau, char t[])
+{
+	struct DanhBa *p, *p1, *p2;
+	p=*dau;
+	while (p!=NULL && strcmp(p->duLieu.tenTB,t)!=0)
+		p=p->lkSau;
+if (p!=NULL)
+{
+	if(p==*dau)
+	{
+		*dau=(*dau)->lkSau;
+		(*dau)->lkTruoc=NULL;
+}
+else
+{
+	p1=p->lkTruoc;p2=p->lkSau;
+	p1->lkSau=p2;
+	if(p2!=NULL) p2->lkTruoc=p1;
+}
+free(p);
+}
+}
+
+void main()
+{
+	struct DanhBa *db=NULL; struct ThueBao x;char ten[30];
+	nhapThueBao(&x);
+	themCuoi(&db,x);
+	nhapThueBao(&x);
+	themCuoi(&db,x);
+	printf("\nnhap ten TB can xoa:");
+	gets(ten);
+	fflush(stdin);
+	xoa(&db,ten);	
+	inDanhBa(db);
+	getch();
+}
+----------------------------------------
+4
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+struct Nguoi
+{
+	char hoTen[30];
+	int 	namSinh;
+};
+void inNguoi(struct Nguoi ng)
+{
+	puts(ng.hoTen);
+	printf("%d\n", ng.namSinh);
+}
+struct CGP
+{
+	struct Nguoi 	duLieu;
+	struct CGP	*trai, *phai;
+};
+//Ham tao nut
+struct CGP* taoNut(struct Nguoi ng, struct CGP *tr, struct CGP *ph)
+{
+	struct CGP *p;
+	p = (struct CGP*) malloc(sizeof(struct CGP));
+	p->duLieu = ng;
+	p->trai = tr; 
+	p->phai = ph;
+   	return p;
+}
+//Ham tao cay
+struct CGP* taoCay()
+{
+	struct Nguoi ng1,ng2,ng3,ng4,ng5,ng6; 
+	struct CGP *n1,*n2,*n3,*n4,*n5,*n6;
+
+   	strcpy(ng1.hoTen,"Nguyen D"); ng1.namSinh = 1960;
+   	n1 = taoNut(ng1, NULL, NULL);
+	strcpy(ng2.hoTen,"Nguyen B"); ng2.namSinh = 1930;
+	n2 = taoNut(ng2, NULL, n1);
+	strcpy(ng3.hoTen,"Nguyen E"); ng3.namSinh = 1965;
+	n3 = taoNut(ng3, NULL, NULL);
+	strcpy(ng4.hoTen,"Nguyen F"); ng4.namSinh = 1970;
+	n4 = taoNut(ng4, NULL, NULL);
+	strcpy(ng5.hoTen,"Nguyen C"); ng5.namSinh = 1935;
+	n5 = taoNut(ng5, n3, n4);
+   	strcpy(ng6.hoTen, "Nguyen A"); ng6.namSinh = 1900;
+   	n6 = taoNut(ng6, n2, n5);
+    return n6;
+}
+//Ham in cay
+void inCay(struct CGP *r)
+{
+	if (r!=NULL)
+	{
+		inNguoi(r->duLieu);
+		inCay(r->trai);
+		inCay(r->phai);
+	}
+}
+//Ham dem nam sinh
+int demNamSinh(struct CGP *r, int x)
+{	int d1, d2;
+	if (r==NULL) return 0;
+	else
+		if (r->duLieu.namSinh<x)
+		{
+			d1=demNamSinh(r->trai, x);
+			d2=demNamSinh(r->phai, x);
+			return d1+d2+1;
+}
+else return 0;
+} 
+//Ham tim ho ten
+struct CGP* timHoTen(struct CGP *r, char *ht)
+{
+	struct CGP *p;
+	if (r==NULL) return NULL;
+	else
+	{
+		if (strcmp(r->duLieu.hoTen,ht)==0)
+			return r;
+		else
+		{
+			p=timHoTen(r->trai, ht);
+			if (p!=NULL) return p;
+			else
+				return timHoTen(r->phai, ht);
+		}
+	}
+}
+//Ham kiem tra the he nguoi x
+int timTheHe(struct CGP *r, char *ht)
+{
+	if(timHoTen(r,ht)==NULL) return 0;
+	else
+	{
+		if (r==NULL) return 0;
+		else
+		{
+			if (strcmp(r->duLieu.hoTen,ht)==0) return 1;
+			else
+			{
+				if(timTheHe(r->trai,ht)!=0) return timTheHe(r->trai,ht)+1;
+				else
+				{
+					if(timTheHe(r->phai,ht)!=0) return timTheHe(r->phai,ht)+1;
+					else return 0;
+				}
+			}
+		}
+	}
+}
+//Chuong trinh chinh
+void main()
+{
+	struct CGP *goc, *kq; char ht[30]; int d;
+	goc = taoCay();
+	inCay(goc);
+	printf("so nguoi co nam sinh truoc 1980: ");
+	d = demNamSinh(goc, 1980);
+	printf("%d", d);
+	printf("\nNhap ho ten nguoi can tim: "); gets(ht);
+	kq = timHoTen(goc, ht);
+	if(kq==NULL)
+		printf("Khong tim thay");
+	else
+		printf("Tim thay ho ten: %s, nam sinh: %d", 
+	kq->duLieu.hoTen, kq->duLieu.namSinh);
+	printf("\nNhap ho ten nguoi can xem the he: "); gets(ht);
+	printf("The he: %d", timTheHe(goc,ht));
+	getch();
+}
+--------------------------------------------------
+6.
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+struct Nguoi
+{
+	char hoTen[30];
+	int 	namSinh;
+};
+void inNguoi(struct Nguoi ng)
+{
+	puts(ng.hoTen);
+	printf("%d\n", ng.namSinh);
+}
+struct CTQ
+{
+	struct Nguoi 	duLieu;
+	struct CTQ	*con, *em;
+};
+//Ham tao nut
+struct CTQ* taoNut(struct Nguoi ng, struct CTQ *con, struct CTQ *em)
+{
+	struct CTQ *p;
+	p = (struct CTQ*) malloc(sizeof(struct CTQ));
+	p->duLieu = ng;
+	p->con = con; 
+	p->em = em;
+   	return p;
+}
+//Ham tao cay
+struct CTQ* taoCay()
+{
+	struct Nguoi ng1,ng2,ng3,ng4,ng5,ng6,ng7,ng8; 
+	struct CTQ *n1,*n2,*n3,*n4,*n5,*n6,*n7,*n8;
+
+   	strcpy(ng1.hoTen,"Nguyen H"); ng1.namSinh = 1970;
+   	n1 = taoNut(ng1, NULL, NULL);
+	strcpy(ng2.hoTen,"Nguyen G"); ng2.namSinh = 1965;
+	n2 = taoNut(ng2, NULL, n1);
+	strcpy(ng3.hoTen,"Nguyen C"); ng3.namSinh = 1935;
+	n3 = taoNut(ng3, n2, NULL);
+	strcpy(ng4.hoTen,"Nguyen F"); ng4.namSinh = 1965;
+	n4 = taoNut(ng4, NULL, NULL);
+	strcpy(ng5.hoTen,"Nguyen E"); ng5.namSinh = 1960;
+	n5 = taoNut(ng5, NULL, n4);
+   	strcpy(ng6.hoTen, "Nguyen D"); ng6.namSinh = 1955;
+   	n6 = taoNut(ng6, NULL, n5);
+   	strcpy(ng7.hoTen, "Nguyen B"); ng7.namSinh = 1930;
+   	n7 = taoNut(ng7, n6, n3);
+   	strcpy(ng8.hoTen, "Nguyen A"); ng8.namSinh = 1900;
+   	n8 = taoNut(ng8, n7, NULL);
+    return n8;
+}
+//dem so nguoi trong cay gia pha
+int dem(struct CTQ *r)
+{
+	struct CTQ *p;
+	if(r==NULL) return 0;
+	else
+       	//return dem(p->con)+dem(p->em)+1;
+    {	
+    	int tong=0;
+    	p=r->con;
+    	while(p!=NULL)
+    	{
+    		tong+=dem(p);
+    		p=p->em;
+		}
+		return tong+1;
+	}
+}
+//in cay gia pha (thuat toan duyet theo chieu rong)
+void inCay(struct CTQ *r)
+{
+	struct CTQ *q[100], *p;
+	int dau, cuoi;
+	if(r!=NULL)
+	{
+		q[0]=r;
+		dau=cuoi=0;
+		while(dau<=cuoi)
+		{
+			p=q[dau];
+			dau++;
+			inNguoi(p->duLieu);
+			p=p->con;
+			while(p!=NULL)
+			{
+				cuoi++;
+				q[cuoi]=p;
+				p=p->em;
+			}	
+		}
+	}
+}
+//tim nguoi ho ten x
+struct CTQ* tim(struct CTQ *r, char *ht)
+{
+    struct CTQ *p;
+    if(r==NULL) return NULL;
+   	else
+    	if(strcmp(r->duLieu.hoTen,ht)==0) return r;
+    	else
+    	{
+        	p=r->con;
+        	while(p!=NULL)
+        	{
+    			struct CTQ *kq;
+				kq=tim(p,ht);
+   				if(kq!=NULL) return kq;
+   				else
+					p=p->em;	
+			}
+			return NULL;
+    	}
+} 
+
+//chuong trinh chinh
+void main()
+{
+	struct CTQ *goc, *kq; char ht[30];
+	goc = taoCay();
+	inCay(goc);
+	printf("So nguoi trong CTQ: %d", dem(goc));
+	printf("\nNhap ho ten nguoi can tim: "); gets(ht);
+	kq=tim(goc,ht);
+	if(kq==NULL)
+		printf("Khong tim thay");
+	else
+		printf("Tim thay ho ten: %s, nam sinh: %d", kq->duLieu.hoTen, kq->duLieu.namSinh);
+	getch();
+}
+-------------------------------------
+8.
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#define max 10
+
+struct DSKe 
+{
+	int dinhKe;
+	struct DSKe *lienKet;
+};
+struct DoThi
+{
+	int soDinh;
+	struct DSKe *dsKe[max];
+};
+
+int daTham[max], truoc[max];
+// Them dinh j vao danh sach ke dinh i
+void them(int i, int j, struct DoThi *g)
+{
+	struct DSKe *p;
+	p = (struct DSKe*)malloc(sizeof(struct DSKe));
+	p->dinhKe=j;
+	p->lienKet=g->dsKe[i];
+	g->dsKe[i]=p; 
+}
+    
+// Hàm doc tep du lieu do thi co cau truc
+void docTep(char *tenTep, struct DoThi *g)
+{
+	FILE *f; int i,j, tg;
+	f = fopen(tenTep,"r");
+	fscanf(f,"%d",&g->soDinh);
+	for(i=0;i<max;i++)	
+		g->dsKe[i]=NULL;
+	for(i=0;i<g->soDinh;i++)
+		for(j=0;j<g->soDinh;j++)
+		{
+			fscanf(f,"%d",&tg);
+			if(tg==1) them(i,j,g);
+		}
+	fclose(f);
+}
+
+// Hàm in do thi danh sach ke
+void inDoThi(struct DoThi g)
+{
+	int i;
+	struct DSKe *p;
+	printf("so dinh: %d \n", g.soDinh);
+	printf("Cac ds ke:\n");
+	for(i=0;i<g.soDinh; i++)
+	{
+		printf("Danh sach ke thu %d:", i);
+		p = g.dsKe[i];
+		while (p!=NULL)
+		{
+			printf("%d ", p->dinhKe);
+			p = p->lienKet; 
+		}
+		printf("\n");
+	}
+}
+//Hàm duy?t ?? th? theo chi?u sâu trên ?? th? bi?u di?n b?ng danh sách k?
+void duyetSauDD(struct DoThi g, int v)
+{
+	struct DSKe *p; int w;
+	daTham[v]=1;
+	p=g.dsKe[v];
+	while (p!=NULL)
+	{
+		w=p->dinhKe;
+		if(daTham[w]==0)
+		{truoc[w]=v; duyetSauDD(g,w);}
+		p=p->lienKet;
+	}
+}
+//Tìm ???ng ?i trên ?? th? g t? x ??n y
+int duongDi(struct DoThi g, int x, int y)
+{
+	int i;
+	for(i=0;i<g.soDinh; i++) daTham[i]=0;
+	duyetSauDD(g, x);
+	return daTham[y];
+}
+//In ???ng ?i t? x ??n y
+void inDuongDi(int x, int y)
+{
+	int t;
+	t=y;
+	while (t!=x)
+	{
+		printf("%d <=", t);
+		t=truoc[t];
+	}
+	printf("%d", t);
+}
+//Ham main
+void main()
+{
+	struct DoThi g;
+	docTep("DSK.txt",&g);
+	inDoThi(g);
+	printf("\n");
+	duongDi(g, 0, 3);
+	inDuongDi(0,3);
+	getch();
+}
+---------------------------------------
+9
+#include <stdio.h>
+#define max 10
+#define VC 1000 //h?ng vô cùng
+struct DoThi
+{
+	int soDinh;
+	int mtk[max][max];
+};
+int daTham[max], truoc[max], d[max];
+
+//Hàm ?o?c tê?p d?? liê?u ?ô? thi?:
+void docTep(char *tenTep, struct DoThi *g)
+{
+	FILE *f; int x,y,i,j;
+	f = fopen(tenTep,"r");
+	fscanf(f,"%d",&g->soDinh);
+	for(i=0;i<g->soDinh;i++)
+		for(j=0;j<g->soDinh;j++)
+			fscanf(f,"%d",&g->mtk[i][j]);
+	fclose(f);
+}
+//Hàm in ?? th? bi?u di?n b?ng ma tr?n k?:
+void inDoThi(struct DoThi g)
+{	int i,j;
+	printf("%d\n",g.soDinh);
+	for(i=0;i<g.soDinh;i++)
+	{
+		for(j=0;j<g.soDinh;j++)
+			printf("%d ",g.mtk[i][j]);
+		printf("\n");
+	}		
+}
+//Tìm ???ng ?i ng?n nh?t trên ?? th? g xu?t phát t? ??nh s
+void dijkstra(struct DoThi g, int s)
+{
+	int i,k, vmin, min;
+	//Khoi tao
+	for(i=0; i<g.soDinh;i++)
+	{
+		d[i]=g.mtk[s][i];
+		truoc[i]=s;
+	}
+	daTham[s]=1;
+	for(k=1; k<g.soDinh; k++)
+	{
+		//Tìm dinh da xac dinh duoc ddnn
+		min=VC;
+		for(i=0;i<g.soDinh; i++)
+		if(daTham[i]==0 && d[i]<min)
+		{
+			vmin=i;
+			min=d[i];
+		}
+		daTham[vmin]=1;
+		//Hieu chinh ddnn
+		for(i=0; i<g.soDinh; i++)
+			if(daTham[i]==0 &&g.mtk[vmin][i]!=VC && d[i]>d[vmin]+g.mtk[vmin][i])
+			{
+				d[i]=d[vmin]+g.mtk[vmin][i];
+				truoc[i]=vmin;
+			}
+	}
+}
+void inDD(int x, int y)
+{
+	int t;
+	t=y;
+	while (t!=x)
+	{
+		printf("%d <=",t);
+		t=truoc[t];
+	}
+	printf("%d \n",t);
+	printf("Tong trong so: %d",d[y]);
+}
+//chuong trinh chinh
+void main()
+{
+	struct DoThi g;
+	docTep("dt1.txt",&g);
+	inDoThi(g);
+	dijkstra(g,0);
+	inDD(0,2);
+	getch();
+}    
+------------------------
+10
+#include <stdio.h>
+#define max 10
+struct Canh
+{
+	int dinhDau, dinhCuoi;
+	float trongSo;
+};
+struct DoThi
+{
+	int soDinh, soCanh;
+	struct Canh dsCanh[max];
+};
+int daTham[max];
+
+//Hàm doc tep do thi
+void docTep(char *tenTep, struct DoThi *g)
+{
+	FILE *f; int i,j,tg;
+	f = fopen(tenTep,"r");
+	fscanf(f,"%d",&g->soDinh);
+	g->soCanh=0;
+	for(i=0;i<g->soDinh;i++)
+		for(j=0;j<g->soDinh;j++)
+		{
+			fscanf(f,"%d",&tg);
+			if(tg==1) 
+			{
+				g->dsCanh[g->soCanh].dinhDau=i;
+				g->dsCanh[g->soCanh].dinhCuoi=j;
+				g->soCanh++; 
+			}
+		}	
+	fclose(f);
+}
+//Hàm in ?? th? bi?u di?n b?ng ds c?nh:
+void inDoThi(struct DoThi g)
+{	int i;
+	printf("So dinh: %d, so canh: %d \n",g.soDinh,g.soCanh);
+	for(i=0;i<g.soCanh;i++)
+	{
+		printf("%d %d \n",g.dsCanh[i].dinhDau, g.dsCanh[i].dinhCuoi);
+	}		
+}
+
+void duyetSauCK(struct DoThi g, int v, struct DoThi *h)
+{
+	int i, w;
+	daTham[v]=1;
+	for(i=0;i<g.soCanh; i++)
+	{
+		if(g.dsCanh[i].dinhDau=v) 
+			w=g.dsCanh[i].dinhCuoi;
+		else
+			if(g.dsCanh[i].dinhCuoi=v)
+				w=g.dsCanh[i].dinhDau;
+			else 
+				w=-1;
+		if(w!=-1 && daTham[w]==0)
+		{
+			h->dsCanh[h->soCanh]=g.dsCanh[i];
+			h->soCanh++;
+			duyetSauCK(g,w,h);
+		}
+	}	
+}
+//Tìm m?t cây khung c?a ?? th?
+struct DoThi cayKhung(struct DoThi g)
+{
+	struct DoThi h;int i;
+	h.soDinh=g.soDinh;
+	h.soCanh=0;
+	for(i=0; i<g.soDinh; i++) daTham[i]=0;
+		duyetSauCK(g,0,&h);
+	return h;		
+}
+
+void main()
+{
+	struct DoThi g,h;  
+	docTep("dt2.txt",&g);
+	inDoThi(g);
+	h=cayKhung(g);
+	inDoThi(h);
+	getch();
+}    
+----------------
+11
+#include <stdio.h>
+#include <conio.h>
+#define max 10
+#define max 10
+#define VC 1000 //hang vo cung
+
+struct Canh
+{
+	int dinhDau, dinhCuoi;
+	float trongSo;
+};
+struct DoThi
+{
+	int soDinh, soCanh;
+	struct Canh dsCanh[max];
+};
+int tp[max]; 
+
+
+void docTep(char *tenTep, struct DoThi *g)
+{
+	FILE *f; int i,j,tg;
+	f = fopen(tenTep,"r");
+	fscanf(f,"%d",&g->soDinh);
+	g->soCanh=0;
+	for(i=0;i<g->soDinh;i++)
+		for(j=0;j<g->soDinh;j++)
+		{
+			fscanf(f,"%d",&tg);
+			if(tg!=VC && i<j) 
+			{ 
+ 				g->dsCanh[g->soCanh].dinhDau=i;
+  				g->dsCanh[g->soCanh].dinhCuoi=j;
+  				g->dsCanh[g->soCanh].trongSo=tg;
+				g->soCanh++;	
+			}
+		}	
+	fclose(f);
+}
+
+
+void inDoThi(struct DoThi g)
+{	int i;
+	printf("So dinh: %d, so canh: %d \n",g.soDinh,g.soCanh);
+	for(i=0;i<g.soCanh;i++)
+	{
+		printf("%d %d %f \n",g.dsCanh[i].dinhDau, g.dsCanh[i].dinhCuoi, g.dsCanh[i].trongSo);
+	}		
+}
+
+
+void sort(struct DoThi *g)
+{
+	int i,j; struct Canh tg;
+	for(i=0;i<g->soCanh-1; i++)
+		for(j=i+1;j<g->soCanh; j++)
+			if(g->dsCanh[i].trongSo>g->dsCanh[j].trongSo)
+			{
+				tg=g->dsCanh[i];
+				g->dsCanh[i]=g->dsCanh[j];
+				g->dsCanh[j]=tg;
+			}
+}
+
+void ghepTPLT(int a, int b)
+{
+	int tg,i;
+    if(a>b){tg=a; a=b; b=tg;}
+    for(i=1; i<max;i++) if(tp[i]==b) tp[i]=a;	
+}
+
+
+struct DoThi cayKhungNN(struct DoThi g)
+{
+	struct DoThi h;int i,k;
+	h.soDinh=g.soDinh;
+	h.soCanh=0;
+	for(i=0;i<g.soDinh;i++) tp[i]=i; 
+	sort(&g);
+	k=0; 
+	while (h.soCanh<h.soDinh-1)
+	{
+		int dd,dc;
+		dd=g.dsCanh[k].dinhDau;
+		dc=g.dsCanh[k].dinhCuoi;
+		if (tp[dd]!=tp[dc])
+		{
+			h.dsCanh[h.soCanh]=g.dsCanh[k];
+			h.soCanh++;
+			ghepTPLT(tp[dd],tp[dc]);
+		}
+		k++; 
+	}
+	return h;		
+}
+//tim cay khung ngan nhat khong chua canh (x, y)
+struct DoThi koChuaCanh(struct DoThi g,int x, int y)
+{
+	struct DoThi h;
+	int i,k,dem;
+	h.soDinh=g.soDinh;
+	h.soCanh=0;
+	for(i=0;i<g.soDinh;i++) tp[i]=i; 
+	sort(&g);
+	k=0;
+	while (h.soCanh<h.soDinh-1)
+	{
+		int dd,dc;
+		dd=g.dsCanh[k].dinhDau;
+		dc=g.dsCanh[k].dinhCuoi;
+		if (tp[dd]!=tp[dc]&& dd!=x && dc!=y)
+		{
+			h.dsCanh[h.soCanh]=g.dsCanh[k];
+			h.soCanh++;
+			ghepTPLT(tp[dd],tp[dc]);
+		}
+		k++; 
+	}
+	return h;		
+}
+//cay khung ngan nhat chua cac canh co trong so <=m
+struct DoThi cayKhungTSM(struct DoThi g,float m)
+{
+	struct DoThi h;
+	int i,k,dem=0;
+	h.soDinh=g.soDinh;
+	h.soCanh=0;
+	for(i=0;i<g.soDinh;i++) tp[i]=i; 
+	sort(&g);
+	for(i=0;i<g.soDinh;i++)
+		if(g.dsCanh[k].trongSo<=m) dem++;
+	if(dem<g.soDinh-1) return h;
+	else{
+	k=0; 
+	while (h.soCanh<h.soDinh-1)
+	{
+		if(g.dsCanh[k].trongSo<=m){
+			int dd,dc;
+			dd=g.dsCanh[k].dinhDau;
+			dc=g.dsCanh[k].dinhCuoi;
+			if (tp[dd]!=tp[dc]){
+				h.dsCanh[h.soCanh]=g.dsCanh[k];
+				h.soCanh++;
+				ghepTPLT(tp[dd],tp[dc]);
+			}
+		}
+		k++; 
+	}
+	return h;		
+}
+}
+void main()
+{
+	struct DoThi g,h1,h2,h3;
+	docTep("dt1.txt",&g);
+	inDoThi(g);
+	h1=cayKhungNN(g);
+	h2=koChuaCanh(g,2,3);
+	h3=cayKhungTSM(g,20.0000);
+	inDoThi(h1);
+	inDoThi(h2);
+	inDoThi(h3);
+	getch();
+}    
+
+------------------------------
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Nguoi
+{
+	char hoTen[30];
+	int namSinh;
+};	
+
+struct CTQ
+{
+	struct Nguoi 	duLieu;
+	struct CTQ	*con, *em;
+};
+
+struct CTQ* taoNut(struct Nguoi ng, struct CTQ *c, struct CTQ *e)
+{
+   	struct CTQ *p;
+	p = (struct CTQ*) malloc(sizeof(struct CTQ));
+	p->duLieu = ng;
+	p->con = c; 
+	p->em = e;
+   	return p;
+}
+
+struct CTQ* taoCay()
+{
+  	struct Nguoi ng1,ng2,ng3,ng4,ng5,ng6,ng7,ng8; 
+	struct CTQ *n1,*n2,*n3,*n4,*n5,*n6,*n7,*n8;
+
+   	
+   	strcpy(ng1.hoTen,"Nguyen H"); ng1.namSinh = 1970;
+   	n1= taoNut(ng1, NULL, NULL);
+   	
+   	strcpy(ng2.hoTen,"Nguyen G"); ng2.namSinh = 1965;
+   	n2= taoNut(ng2, NULL, n1);
+   	
+   	strcpy(ng3.hoTen,"Nguyen C"); ng3.namSinh = 1935;
+   	n3= taoNut(ng3, n2, NULL);
+   	
+   	strcpy(ng4.hoTen,"Nguyen F"); ng4.namSinh = 1965;
+   	n4= taoNut(ng4, NULL, NULL);
+   	
+   	strcpy(ng5.hoTen,"Nguyen E"); ng5.namSinh = 1960;
+   	n5= taoNut(ng5, NULL, n4);
+   	
+   	strcpy(ng6.hoTen, "Nguyen D"); ng6.namSinh = 1955;
+   	n6 = taoNut(ng6, NULL, n5);
+    	
+    strcpy(ng7.hoTen, "Nguyen B"); ng7.namSinh = 1930;
+   	n7 = taoNut(ng7, n6, n3);
+   	
+    strcpy(ng8.hoTen, "Nguyen A"); ng8.namSinh = 1900;
+   	n8 = taoNut(ng8, n7, NULL);
+    	return n8;
+}
+// in thog tin nguoi
+void inNut(struct Nguoi ng){
+	printf("ho ten: %s, nam sinh: %d\n", ng.hoTen, ng.namSinh);
+}
+
+//in cay gia pha theo thu tu the he
+
+void inCGP(struct CTQ *goc){
+struct CTQ *q[100], *p;
+int dau,cuoi;
+if(goc!=NULL){
+	q[0]=goc;
+	dau=cuoi=0;
+	while(dau<=cuoi){
+		p=q[dau];
+		dau++;
+		inNut(p->duLieu);
+		p=(p->con);
+		while(p!=NULL){
+			cuoi++;
+			q[cuoi]=p;
+			p=p->em;
+		}
+	}
+}
+}
+
+// dem tong so nguoi co trong cay
+
+
+int dem(struct CTQ *goc){
+	struct CTQ *p;
+	int tong;
+	if(goc==NULL) return 0;
+	else{
+		tong = 1;
+		p=goc->con;
+		while (p!=NULL){
+			tong = tong + dem(p);
+			p=p->em;
+		}
+		return tong;
+	}
+}
+
+
+//tim xem 1 nguoi co trong cay gia pha khong
+struct CTQ* tim(struct CTQ *goc, char *ht)
+{
+    struct CTQ *p, *kq;
+    if(goc==NULL) return NULL;
+   	else
+     	if(strcmp(goc->duLieu.hoTen,ht)==0) return goc;
+     	else
+     	{
+        	p=goc->con;
+        	while(p!=NULL){
+    			kq= tim(p,ht);
+   				if(kq!=NULL) return kq;
+   				else
+     			 	p=p->em;	
+			}
+	return NULL;
+    }
+} 
+
+void main()
+{
+	struct CTQ *goc, *kq; int d; char ht[30];
+	goc = taoCay();
+	inCGP(goc);
+	printf("tong so nguoi co trong cay = %d\n",dem(goc));
+	printf("Nhap ho ten nguoi can tim: "); gets(ht);
+	kq = tim(goc, ht);
+	if(kq==NULL)
+		printf("Khong tim thay");
+	else
+		printf("Tim thay ho ten: %s, nam sinh: %d\n", kq->duLieu.hoTen, kq->duLieu.namSinh);
+	getch();
+}
+
+
+====================================
+#include <stdio.h>
+#include <stdlib.h>
+#define max 100
+struct PT
+{
+	char 	duLieu;
+	int 	doUT;
+	
+};
+struct HDUT
+{
+	struct PT pt[100];
+	int soPT;
+};
+void siftUp(struct HDUT *h)
+{
+	int done, i,p; struct PT tg;
+	done=0; i=h->soPT;
+	while(i>1 && !done)
+	{
+    	p= i/2;
+    	if (h->pt[p].doUT> h->pt[i].doUT)
+    	{
+			tg=h->pt[p];
+			h->pt[p]= h->pt[i];
+			h->pt[i]=tg;
+    	}
+    	else
+			done=1;
+    	i=p;
+	}
+}
+
+void siftDown(struct HDUT *h, int l, int r)
+{
+	if(2*l<=r)
+	{
+		int c=2*l;
+		if(c+1<=r && h->pt[c+1].doUT>h->pt[c].doUT)
+			c=c+1;
+		if(h->pt[c].doUT>h->pt[l].doUT)
+		{
+			struct PT tg;
+			tg=h->pt[c];
+			h->pt[c]=tg;
+			siftDown(h,c,r);
+		}
+	}	
+}
+//Them 1 phan tu vao cuoi hang doi
+void them(struct HDUT *h, struct PT x)
+{
+	h->soPT++;
+	h->pt[h->soPT]=x;
+	siftUp(h);
+}
+
+//Lay ra
+struct PT lay(struct HDUT *h)
+{
+ 	int n; struct PT x;
+	n=h->soPT;
+	x=h->pt[1];
+	h->pt[1] = h->pt[n];
+	h->soPT--;
+	siftDown(h,1,h->soPT);
+	return x;
+}
+//Chuong trinh chinh
+void main()
+{
+	struct HDUT h; struct PT x;
+	h.soPT=0;
+	x.duLieu='A'; x.doUT=3;
+	them(&h, x);
+	x.duLieu='B'; x.doUT=3;
+	them(&h, x);
+	x.duLieu='C'; x.doUT=7;
+	them(&h, x);
+	x.duLieu='D'; x.doUT=2;
+	them(&h, x);
+	x = lay(&h);
+	printf("%c %d",x.duLieu, x.doUT);
+	getch();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
