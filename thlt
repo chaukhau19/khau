@@ -1,0 +1,154 @@
+Bài thực hành số 1: Cấu trúc điều khiển
+
+1.Viết chương trình tính tổng chữ số của một số không quá 9 chữ số.
+
+2.Viết chương trình kiểm tra một số nguyên dương bất kỳ (2 chữ số trở lên, không quá 9 chữ số)
+có chữ số bắt đầu và kết thúc bằng nhau hay không.
+
+3.Viết chương trình tính bội số chung nhỏ nhất của hai số nguyên dương không quá 7 chữ số.
+
+4.Viết chương trình kiểm tra một số có thỏa mãn tính chất tổng chữ số của nó chia hết cho 10 hay không.
+
+5.Một số được coi là đẹp nếu nó là số thuận nghịch, tổng chữ số là số nguyên tố và tất cả các chữ số đều lẻ. 
+Bài toán đặt ra là đếm xem trong một đoạn giữa hai số nguyên cho trước có bao nhiêu số đẹp như vậy.
+
+6.Một số được coi là đẹp nếu nó có tính chất thuận nghịch và tổng chữ số chia hết cho 10.
+Bài toán đặt ra là cho trước số chữ số. Hãy đếm xem có bao nhiêu số đẹp với số chữ số như vậy.
+
+7.Trong lúc rảnh rỗi, hai bạn sinh viên quyết định chơi trò đoán số giống học sinh cấp 1. 
+Mỗi bạn nghĩ ra hai con số nguyên không âm sau đó viết ra tổng và hiệu của chúng (cũng là các số nguyên không âm). 
+Công việc của bạn kia là xác định hai con số ban đầu. Ở một số lượt chơi, 
+một bạn có thể cố tình đưa ra một cặp giá trị không thể là tổng và hiệu của hai số nguyên nào cả.
+Viết chương trình giúp tính toán nhanh ra kết quả cho bài toán trên.
+
+8.Khi mua hàng bằng máy bán hàng tự động, người mua sẽ trả bằng một số tiền chẵn lớn hơn hoặc bằng giá của sản phẩm. 
+Máy sẽ tính toán để trả lại số tiền thừa cho người mua. 
+Giả sử trong máy chỉ có ba mệnh giá tiền là 1 dollar, 5 dollar và 10 dollar 
+với quy ước mỗi lần trả chỉ được phép dùng ít hơn 5 tờ 1 dollar và ít hơn 2 tờ 5 dollar.
+Hãy viết chương trình tính số tiền mỗi loại mà máy bán hàng tự động phải trả lại cho người mua.
+
+9.Viết chương trình đếm trong một đoạn giữa hai số nguyên có bao nhiêu số chính phương.
+
+10.Một số được coi là thuần nguyên tố nếu nó là số nguyên tố, 
+tất cả các chữ số là nguyên tố và tổng chữ số của nó cũng là một số nguyên tố. 
+Bài toán đặt ra là đếm xem trong một đoạn giữa hai số nguyên cho trước có bao nhiêu số thuần nguyên tố.
+---------------------------------------------------------------
+Bài thực hành số 2: Mảng 1 chiều
+1.Viết chương trình đếm các cặp số bằng nhau liên tiếp trong dãy số nguyên.
+
+2.Cho một dãy số nguyên dương có n phần tử (2<=n<=50). 
+Hãy liệt kê số các phần tử trong dãy không nhỏ hơn các số đứng trước nó (tính cả phần tử đầu tiên).
+
+3.An và Bình chơi trò chơi số học đơn giản. 
+Dãy số mà An đưa ra là A ={1,1,3,4,5,9,7,16,9,…}và đố Bình tìm ra số tiếp theo trong dãy đó. 
+Rất nhanh chóng, Bình tìm được số tiếp theo là số 25. 
+Bình đố lại An, nếu cho trước một số k không quá 100, hãy tính số đứng vị trí đó trong dãy đã cho (thứ tự trên dãy tính từ 1). 
+Bạn hãy giúp An tính ra kết quả trên.
+
+4.Cho một dãy số nguyên dương không quá 100 phần tử, các giá trị trong dãy không quá 30000. 
+Hãy xác định xem số nào là số xuất hiện nhiều lần nhất trong dãy. 
+Chú ý: trong trường hợp nhiều số khác nhau cùng xuất hiện số lần bằng nhau 
+và là lớn nhất thì in ra tất cả các số đó theo thứ tự xuất hiện trong dãy ban đầu.
+-----------------------------------------------------------
+Bài thực hành số 3: Mang 2 chieu
+1.Cho hai ma trận vuông A và B chỉ gồm số nguyên cấp n . 
+Hãy viết chương trình tìm ra các vị trí bằng nhau trong hai ma trận 
+(vị trí [i,j] được coi là bằng nhau nếu A[i,j]=B[i,j]).
+
+2.Cho hai ma trận vuông A và B chỉ gồm số nguyên cấp n. Hãy viết chương trình tính tổng hai ma trận.
+
+3.Cho ma trận A chỉ gồm các số nguyên cấp n*m. Hãy viết chương trình tính tích của A với ma trận chuyển vị của A.
+
+4.Một ma trận vuông A cấp n chỉ gồm các số nguyên. 
+A được gọi là ma trận đơn vị nếu tất cả các phần tử trong A đều là 0 hoặc 1. 
+Viết chương trình kiểm tra xem một ma trận có là ma trận đơn vị hay không.
+
+5.Một ma trận vuông A cấp n chỉ gồm các số nguyên. 
+A được gọi là ma trận đồng nhất nếu A là ma trận vuông bậc n có các phần tử đều bằng 0, trừ các phần tử trên đường chéo chính đều bằng 1. 
+Viết chương trình kiểm tra xem một ma trận có là ma trận đồng nhất hay không
+
+6.Một ma trận vuông A cấp n chỉ gồm các số nguyên. 
+Viết chương trình thực hiện chuyển đổi các phần tử trong ma trận A theo quy tắc: 
+chuyển phần tử lớn nhất nằm trên mỗi dòng với phần tử nằm trên đường chéo chính cũng thuộc dòng đó.
+--------------------------------------------------------------
+Bài thực hành số 4: Xâu ký tự
+1.Viết chương trình cộng hai số nguyên dương bất kỳ (không quá 256 chữ số).
+
+2.Cho một danh sách các số điện thoại, hãy xác định danh sách này có số điện thoại nào là phần trước của số khác hay không? 
+Nếu không thì danh sách này được gọi là nhất quán.
+ Giả sử một danh sách có chứa các số điện thoại sau:
+-	Số khẩn cấp: 911
+-	Số của alice: 97 625 999
+-	Số của Bob: 91 12 54 26
+Trong trường hợp này, ta không thể gọi cho Bob vì tổng đài sẽ kết nối bạn với đường dây khẩn cấp ngay khi bạn quay 3 số đầu trong số của Bob, 
+vì vậy danh sách này là không nhất quán.
+
+3.Một xâu họ tên được coi là viết chuẩn nếu chữ cái đầu tiên mỗi từ được viết hoa, các chữ cái khác viết thường. 
+Các từ cách nhau đúng một dấu cách và không có khoảng trống thừa ở đầu và cuối xâu. 
+Hãy viết chương trình đưa các xâu họ tên về dạng chuẩn.
+--------------------------------------------------------------------
+Bài thực hành số 5: File và cấu trúc
+1.Viết chương trình đếm số từ khác nhau của một file văn bản.
+
+2.Cho một file văn bản chỉ bao gồm các số nguyên không quá 9 chữ số. 
+Viết chương trình đếm xem trong file đó có bao nhiêu số nguyên tố khác nhau.
+
+3.Cho một file văn bản bất kỳ. Hãy tìm ra từ thỏa mãn tính chất thuận nghịch có độ dài lớn nhất trong file đó 
+và cho biết từ đó xuất hiện bao nhiêu lần. 
+Nếu có nhiều từ cùng có độ dài lớn nhất thì in ra tất cả các từ đó theo thứ tự xuất hiện trong file ban đầu.
+
+4.Cho một file văn bản bất kỳ. Hãy tìm ra từ có độ dài lớn nhất trong file. 
+Nếu có nhiều từ khác nhau có độ dài bằng nhau và bằng giá trị lớn nhất 
+thì in ra tất cả các từ đó theo thứ tự xuất hiện trong file dữ liệu vào 
+(nhưng một từ dù xuất hiện nhiều lần cũng chỉ được liệt kê một lần).
+
+5.Hãy sắp xếp danh sách thí sinh đã có trong file theo tổng điểm giảm dần. Mỗi thí sinh gồm các thông tin:
+•	Mã thí sinh: là một số nguyên, tự động tăng. Tính từ 1.
+•	Tên thí sinh, ngày sinh
+•	Điểm môn 1, điểm môn 2, điểm môn 3
+
+6.Hãy sắp xếp danh sách các mặt hàng đã có trong file theo lợi nhuận giảm dần. Mỗi mặt hàng gồm các thông tin:
+•	Mã mặt hàng: là một số nguyên, tự động tăng. Tính từ 1.
+•	Tên mặt hàng, nhóm hàng: là các xâu ký tự
+•	Giá mua, giá bán: là các số thực (không quá 9 chữ số)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
