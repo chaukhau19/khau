@@ -529,7 +529,211 @@ thì in ra tất cả các từ đó theo thứ tự xuất hiện trong file d�
 •	Mã mặt hàng: là một số nguyên, tự động tăng. Tính từ 1.
 •	Tên mặt hàng, nhóm hàng: là các xâu ký tự
 •	Giá mua, giá bán: là các số thực (không quá 9 chữ số)
+---------------------------------------------------------------------------------------------------------------------
+bai6.lop
+1.quan  ly xe co
 
+import java.util.*;
+
+
+public class QuanLyXeCo {
+    private String tenChuXe;
+    public String loaiXe;
+    public int dungTich;
+    public float triGia;
+    public float thuePhaiNop;
+    //
+    public QuanLyXeCo(){
+        tenChuXe="";
+        loaiXe="";
+        dungTich=0;
+        triGia=0;
+        thuePhaiNop=0;
+    }
+    public QuanLyXeCo(String tcx,String loai,int dt,float tg,float thue)
+    {
+        this.tenChuXe=tcx;
+        this.loaiXe=loai;
+        this.dungTich=dt;
+        this.triGia=tg;
+    }    
+
+    public String getTenChuXe() {
+        return tenChuXe;
+    }
+
+    public void setTenChuXe(String tenChuXe) {
+        this.tenChuXe = tenChuXe;
+    }
+
+    public String getLoaiXe() {
+        return loaiXe;
+    }
+
+    public void setLoaiXe(String loaiXe) {
+        this.loaiXe = loaiXe;
+    }
+
+    public int getDungTich() {
+        return dungTich;
+    }
+
+    public void setDungTich(int dungTich) {
+        this.dungTich = dungTich;
+    }
+
+    public float getTriGia() {
+        return triGia;
+    }
+
+    public void setTriGia(float triGia) {
+        this.triGia = triGia;
+    }
+
+    public float getThuePhaiNop() {
+        return thuePhaiNop;
+    }
+
+    public void setThuePhaiNop(float thuePhaiNop) {
+        this.thuePhaiNop = thuePhaiNop;
+    }
+    //tinh tien thue
+   public  float TinhTienThueXe()
+   {
+       if(this.dungTich<100)
+           this.thuePhaiNop=(float)this.triGia/100;
+       else
+       {
+         if( this.dungTich<200)
+             this.thuePhaiNop=(float)this.triGia*3/100;
+         else
+             this.thuePhaiNop=(float)this.triGia*5/100;
+       }
+        return this.thuePhaiNop;
+   }
+   
+   //ham nhap thong tin
+   public void nhapTT()
+   {
+       Scanner nhap=new Scanner(System.in);
+       System.out.println("==========Nhap thong tin xe========: ");
+       System.out.println("hay nhap thong tin chu xe: ");
+       this.tenChuXe=nhap.nextLine();
+       System.out.println("nhap loai xe:");
+       this.loaiXe=nhap.nextLine();
+       System.out.println("cho biet dung tich: ");
+       this.dungTich=nhap.nextInt();
+       System.out.println("gia tri cua xe: ");
+       this.triGia=nhap.nextFloat();
+       
+   }
+   public void inTT()
+   {
+       System.out.println("ten chu xe la:\n "+this.getTenChuXe()
+                       +"\tLoai xe: \n"+this.getLoaiXe()
+                       +"\tDubg tich la: \n "+this.getDungTich()
+                       +"\tGia tri cua xe:\n"+this.getTriGia()
+                       +"\tThue phai nop la:\n "+this.TinhTienThueXe());
+
+   }
+   
+}
+.............
+public class Main {
+    public static void main(String[] args) {
+        QuanLyXeCo qlxc;
+        qlxc=new QuanLyXeCo();
+        
+        qlxc.nhapTT();
+        qlxc.inTT();
+    }
+}
+..............
+DEMO
+
+package demo1;
+
+public class bai6 {
+    private String TenChuXe;
+    private String LoaiXe;
+    private int DungTich;
+    private double TienThue;
+    private long GiaXe;
+    //getter
+     public bai6(){
+         String TenChuXe="";
+         String LoaiXe="";
+         int DungTich =0;
+         long GiaXe=0;        
+     }
+     public bai6(String tcx,String lx,int dt,long gx){
+        this.TenChuXe =tcx;
+        this.LoaiXe =lx;
+        this.DungTich =dt;
+        this.GiaXe =gx;
+     }
+     public String getTenChuXe(){
+         return TenChuXe;
+        
+     }
+     public String getLoaiXe(){
+         return LoaiXe;
+     }
+     public int getDungTich(){
+         return DungTich;
+     }
+
+     private long getGiaXe(){
+         return GiaXe;
+     }
+     //setter
+
+     public void setTenChuXe(String TenChuXe){
+         this.TenChuXe =TenChuXe;
+     }
+     public void setLoaiXe(String LoaiXe){
+         this.LoaiXe =LoaiXe;
+     }
+     public void setDungTich(int DungTich){
+         this.DungTich=DungTich;
+     }
+     public void setGiaXe(long GiaXe){
+         this.GiaXe =GiaXe;
+     }
+     //tinh thue xe
+     public double ThueXe(){
+         if(DungTich<100){TienThue = (double) (GiaXe*0.01);            
+         }if(DungTich>=100&&DungTich<=200){
+             TienThue=  (double)(GiaXe*0.03);
+         }if(DungTich>200){
+             TienThue =(double)(GiaXe*0.05);
+         }
+        return (double) TienThue;
+        
+     }
+}
+..........
+package demo1;
+
+import java.util.Scanner;
+
+
+public class Demo1 {
+
+    public static void main(String[] args) {
+        Scanner nhap =new Scanner(System.in);
+             System.out.println("=====Nhap Thong tin Xe=====");
+             System.out.println("Ten Chu Xe:");
+        String TenChuXe = nhap.nextLine();
+             System.out.println("Loai Xe:");
+        String LoaiXe = nhap.nextLine();
+             System.out.println("Dung Tich Xe:");
+        int DungTich = nhap.nextInt();
+             System.out.println("Gia Xe:");
+        long GiaXe = nhap.nextLong();   
+     }
+    }
+  
 
 
 
