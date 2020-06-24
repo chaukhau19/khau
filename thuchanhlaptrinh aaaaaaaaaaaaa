@@ -733,7 +733,107 @@ public class Demo1 {
         long GiaXe = nhap.nextLong();   
      }
     }
-  
+    ----------------------------------------------------------------------------------------------
+  6.2
+  import java.text.NumberFormat;
+
+public class Account {
+    private long sotaikhoan;
+    private String tentaikhoan;
+    private double sodu;
+    private final double interest=0.035;
+    public Account(){
+        sotaikhoan=0;
+        tentaikhoan="";
+        sodu=0;
+    }
+    public Account(long sotaikhoan,String tentaikhoan){
+        this.sotaikhoan=sotaikhoan;
+        this.tentaikhoan=tentaikhoan;
+        this.sodu=50;
+    }
+    public Account(long sotaikhoan,String tentaikhoan,double sodu){
+        this.sotaikhoan=sotaikhoan;
+        this.tentaikhoan=tentaikhoan;
+        if(sodu>=0)
+            this.sodu=sodu;
+        else 
+            this.sodu=0;
+    }
+    public long getsotaikhoan(){
+        return sotaikhoan;
+    }
+    public String gettentaikhoan(){
+        return tentaikhoan;
+    }
+    public double getsodu(){
+        return sodu;
+    }
+    public void setsotaikhoan(long sotaikhoan){
+        this.sotaikhoan=sotaikhoan;
+    }
+    public void settentaikhoan(String tentaikhoan){
+        this.tentaikhoan=tentaikhoan;
+    }
+    public void setsodu(double sodu){
+        if(sodu>=0)
+            this.sodu=sodu;
+        else
+            this.sodu=0;
+    }
+    public boolean payIn(double money){
+        if(money>=0){
+            this.setsodu(this.getsodu()+money);
+            return true;
+        }else
+            return false;
+    }
+    public boolean withDraw(double money){
+        if(money>=0 && money<=this.getsodu()){
+           this.setsodu(this.getsodu()-money);
+           return true;
+        }else
+            return false;
+    }
+    public boolean transfer(Account a1,Account a2,double money){
+        if(a1.getsodu()>=money){
+            a1.setsodu(a1.getsodu()-money);
+            a2.setsodu(a2.getsodu()+money);
+            return true;
+        }else
+            return false;
+    }
+    
+    public void expired(){
+        this.setsodu(this.getsodu()+(this.getsodu)*this.interest));
+    }
+    public String toString(){
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+        String s="Account sotaikhoan: "+this.getsotaikhoan()+"\nAccount tentaikhoan: "
+                +this.gettentaikhoan()+"\nAvailable sodu: "+nf.format(this.getsodu())+"\n";
+        return s;
+    }
+}
+===============
+import java.util.Scanner;
+
+public class main {
+
+    public static void main(String[] args) {
+        Account a=new Account(400120000,"Nguyen Thi Chau Khau",500000);
+        System.out.print(a);
+        if(a.withDraw(100000))
+            System.out.print(a);
+        Account b=new Account(110042311,"Nguyen ngo",100000);
+        if(a.transfer(a, b, 50000))
+            System.out.println(a);
+        else
+		System.out.println("Chuyen khong thanh cong");
+            
+    }
+    
+}
+
 
 
 
